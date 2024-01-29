@@ -269,7 +269,6 @@
 
                     <!-- KETERANGAN -->
 
-                    <hr>
                     <form class="form-horizontal p-2"
                           method="post"
                           action="modal/p_nilai.php">
