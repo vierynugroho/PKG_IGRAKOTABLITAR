@@ -65,7 +65,7 @@ if (isset($_POST['btnSimpan'])) {
 
 		$_SESSION["flash"]["type"] = "danger";
 		$_SESSION["flash"]["head"] = "Terjadi Kesalahan";
-		$_SESSION["flash"]["msg"] = "Data gagal disimpan! ";
+		$_SESSION["flash"]["msg"] = "Data gagal disimpan!";
 	}
 
 	header("location:../index.php?p=memilihpen");
@@ -82,26 +82,14 @@ if (isset($_POST['id_delete'])) {
 	} else {
 		$_SESSION["flash"]["type"] = "danger";
 		$_SESSION["flash"]["head"] = "Terjadi Kesalahan";
-		$_SESSION["flash"]["msg"] = "Data gagal dihapus! " . mysqli_error($con);
+		$_SESSION["flash"]["msg"] = "Data gagal dihapus! ";
 	}
 	header("location:../index.php?p=memilihpen");
 }
 
 if (isset($_GET['id_penilai'])) {
 	$id_penilai = isset($_GET['id_penilai']) ? mysqli_real_escape_string($con, htmlspecialchars($_GET['id_penilai'])) : "";
-	/*$sql = "SELECT 
-										a.id_penilai, 
-										a.nip, 
-										(SELECT nip FROM penilai_detail WHERE id_penilai_detail = b.id_penilai_detail) as 'penilai',
-										(SELECT nip FROM penilai_detail WHERE id_penilai_detail = b.id_penilai_detail+1) as 'penilai2',
-										(SELECT nip FROM penilai_detail WHERE id_penilai_detail = b.id_penilai_detail+2) as 'penilai3',
-										(SELECT nip FROM penilai_detail WHERE id_penilai_detail = b.id_penilai_detail+3) as 'penilai4',
-										(SELECT nip FROM penilai_detail WHERE id_penilai_detail = b.id_penilai_detail+4) as 'penilai5',
-										(SELECT nip FROM penilai_detail WHERE id_penilai_detail = b.id_penilai_detail+5) as 'penilai6'
-									FROM penilai a 
-									JOIN penilai_detail b ON a.id_penilai = b.id_penilai
-									WHERE a.id_penilai = $id_penilai
-									GROUP BY a.id_penilai";*/
+
 	$i = 1;
 	$sql = "SELECT a.id_penilai, a.nip, b.nip as 'penilai', d.jabatan, d.level 
 				FROM penilai a 

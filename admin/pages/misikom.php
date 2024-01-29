@@ -70,7 +70,7 @@
                 $btn = "Tambah";
                 if (isset($_GET['ubah'])) {
                     $id_isi = isset($_GET['id_isi']) ? mysqli_real_escape_string($con, htmlspecialchars($_GET['id_isi'])) : "";
-                    $sql = "SELECT * FROM isi_kompetensi WHERE id_isi = $id_isi";
+                    $sql = "SELECT * FROM isi_kompetensi a JOIN jenis_kompetensi b ON a.id_kompetensi = b.id_kompetensi ORDER BY b.id_kompetensi ASC";
                     $q = mysqli_query($con, $sql);
                     $data = [];
                     while ($row = mysqli_fetch_assoc($q)) {
@@ -78,6 +78,7 @@
                         $id_kompetensi = $row['id_kompetensi'];
                         $$row['id_kompetensi'] = $row['id_kompetensi'];
                         $isi_kompetensi = $row['isi_kompetensi'];
+                        $nama_kompetensi = $row['nama_kompetensi'];
                         $btn = "Ubah";
                     }
 
@@ -137,13 +138,22 @@
                                             <select class="form-select form-select-sm"
                                                     id="id_kompetensi"
                                                     name="id_kompetensi">
-                                                <?php
-                                                $jb = mysqli_query($con, "SELECT * FROM jenis_kompetensi");
-                                                while ($rj = mysqli_fetch_array($jb)) {
-                                                ?>
+
+                                                <?php if ($_GET['ubah']) { ?>
+                                                <option value="<?= $id_kompetensi ?>"
+                                                        selected
+                                                        hidden> <?= $nama_kompetensi ?> </option>
+                                                <?php } else { ?>
                                                 <option value=""
                                                         selected
                                                         hidden> -- Jenis Kompetensi -- </option>
+
+                                                <?php
+                                                }
+                                                $jb = mysqli_query($con, "SELECT * FROM jenis_kompetensi");
+                                                while ($rj = mysqli_fetch_array($jb)) {
+                                                ?>
+
                                                 <option value="<?= $rj['id_kompetensi'] ?>"
                                                         <?= isset($$rj['nama_kompetensi']) ? "selected" : '' ?>>
                                                     <?= $rj['nama_kompetensi']; ?></option>
@@ -159,7 +169,7 @@
                                             Kompetensi</label>
                                         <div class="col-sm-9">
                                             <textarea class="form-control form-control-sm"
-                                                      id="isi_kompetensi"
+                                                      id="editor"
                                                       name="isi_kompetensi"
                                                       placeholder="Isi Kompetensi"
                                                       rows="10"><?= isset($isi_kompetensi) ? $isi_kompetensi : ""; ?></textarea>
@@ -229,7 +239,7 @@
                                 <tr>
                                     <td><?= ++$i; ?></td>
                                     <td><?= $row['nama_kompetensi']; ?></td>
-                                    <td><?= $row['isi_kompetensi']; ?></td>
+                                    <td><?= htmlspecialchars_decode($row['isi_kompetensi']); ?></td>
                                     <td><?php
                                             $a = ['Kepala Sekolah', 'Guru', 'Wakil Kepala Sekolah'];
                                             $ret = '';
@@ -287,12 +297,12 @@
                         <tr>
                             <th width="30%">Jenis Kompetensi</th>
                             <td width="5%"> : </td>
-                            <td id="td_jenis_kompetensi"> Sekolah </td>
+                            <td id="td_jenis_kompetensi"></td>
                         </tr>
                         <tr>
                             <th>Isi Kompetensi</th>
                             <td> : </td>
-                            <td id="td_isi_kompetensi"> </td>
+                            <td id="td_isi_kompetensi"></td>
                         </tr>
                     </table>
                 </div>

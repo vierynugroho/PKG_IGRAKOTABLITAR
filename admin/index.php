@@ -482,6 +482,8 @@ if (isset($_GET['logout'])) {
 
         <!-- Modal -->
 
+        <!-- CKEditor -->
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
 
 
 
@@ -545,6 +547,16 @@ if (isset($_GET['logout'])) {
             //$('.dataTable').DataTable();
 
         });
+
+
+        // CKEditor
+
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+
 
         setTimeout(function() {
             $(".alert").hide(500);

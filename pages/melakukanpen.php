@@ -359,7 +359,7 @@
                                                     <?= ++$i; ?>
                                                 </td>
                                                 <td class="text-justify">
-                                                    <?= $row['isi_kompetensi']; ?>
+                                                    <?= htmlspecialchars_decode($row['isi_kompetensi']); ?>
                                                 </td>
                                                 <td class="form-group">
                                                     <input class="form-check-input form-check-input-lg"
