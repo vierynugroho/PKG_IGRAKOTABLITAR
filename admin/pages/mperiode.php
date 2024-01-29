@@ -317,7 +317,7 @@ if (isset($_GET['setaktif'])) {
                                     <!-- <a href="index.php?p=mperiode&setaktif=true&id_periode=<?= $row['id_periode']; ?>" class="btn btn-outline-info btn-sm"><span data-feather="check"></span></a> -->
                                     <?php } ?>
                                     <a href="index.php?p=mperiode&ubah=true&id_periode=<?= $row['id_periode']; ?>"
-                                       class="btn btn-warning btn-sm"><span><i class="fas fa-edit"> Ubah</i></span></a>
+                                       class="btn btn-warning btn-sm"><span><i class="fas fa-edit"> </i> Ubah</span></a>
                                 </td>
                             </tr>
                             <?php } ?>

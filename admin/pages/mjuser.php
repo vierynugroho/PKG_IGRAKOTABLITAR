@@ -201,7 +201,7 @@
                                         <a href="index.php?p=mjuser&ubah=true&id_jenis_user=<?= $row['id_jenis_user']; ?>"
                                            class="btn btn-warning btn-sm m-1"
                                            id="<?= $row['id_jenis_user']; ?>"><span><i class="fas fa-edit">
-                                                    Ubah</i></span></a>
+                                                </i> Ubah</span></a>
                                         <!-- 
 								<button href="#" class="btn btn-outline-danger btn-sm btn_hapus" id="<?= $row['id_jenis_user']; ?>"><span data-feather="trash-2"></span></button>
 							-->
