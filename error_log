@@ -1,0 +1,61 @@
+[31-Aug-2023 12:53:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php:9
+Stack trace:
+#0 /home/igrakota/public_html/perwanida/index.php(2): require_once()
+#1 {main}
+  thrown in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 12:53:33 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php:9
+Stack trace:
+#0 /home/igrakota/public_html/perwanida/index.php(2): require_once()
+#1 {main}
+  thrown in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 12:54:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php:9
+Stack trace:
+#0 /home/igrakota/public_html/perwanida/index.php(2): require_once()
+#1 {main}
+  thrown in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 12:55:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php:9
+Stack trace:
+#0 /home/igrakota/public_html/perwanida/index.php(2): require_once()
+#1 {main}
+  thrown in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 12:55:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php:9
+Stack trace:
+#0 /home/igrakota/public_html/perwanida/index.php(2): require_once()
+#1 {main}
+  thrown in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 12:56:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php:9
+Stack trace:
+#0 /home/igrakota/public_html/perwanida/index.php(2): require_once()
+#1 {main}
+  thrown in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 05:58:56 UTC] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 05:58:58 UTC] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 05:59:57 UTC] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 06:00:29 UTC] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 06:00:36 UTC] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 06:01:14 UTC] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 06:01:35 UTC] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 13:04:54 Asia/Jakarta] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 13:05:21 Asia/Jakarta] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 13:05:22 Asia/Jakarta] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 13:05:23 Asia/Jakarta] PHP Fatal error:  Call to undefined function mysql_connect() in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Notice:  Undefined index: c9e9a848920877e76685b2e4e76de38d in /home/igrakota/public_html/perwanida/index.php on line 125
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Notice:  Undefined index: c9e9a848920877e76685b2e4e76de38d in /home/igrakota/public_html/perwanida/index.php on line 125
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/igrakota/public_html/perwanida/config/koneksi.php on line 37
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/igrakota/public_html/perwanida/config/koneksi.php on line 38
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/igrakota/public_html/perwanida/config/koneksi.php on line 37
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/igrakota/public_html/perwanida/config/koneksi.php on line 38
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Notice:  Undefined index: ee11cbb19052e40b07aac0ca060c23ee in /home/igrakota/public_html/perwanida/index.php on line 187
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Fatal error:  Call to undefined function mysql_query() in /home/igrakota/public_html/perwanida/index.php on line 189
+[31-Aug-2023 13:17:35 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 13:30:20 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
+[31-Aug-2023 13:30:20 Asia/Jakarta] PHP Notice:  Undefined index: c9e9a848920877e76685b2e4e76de38d in /home/igrakota/public_html/perwanida/index.php on line 125
+[31-Aug-2023 13:30:20 Asia/Jakarta] PHP Notice:  Undefined index: c9e9a848920877e76685b2e4e76de38d in /home/igrakota/public_html/perwanida/index.php on line 125
+[31-Aug-2023 13:30:20 Asia/Jakarta] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/igrakota/public_html/perwanida/config/koneksi.php on line 37
+[31-Aug-2023 13:30:20 Asia/Jakarta] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/igrakota/public_html/perwanida/config/koneksi.php on line 38
+[31-Aug-2023 13:30:20 Asia/Jakarta] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/igrakota/public_html/perwanida/config/koneksi.php on line 37
+[31-Aug-2023 13:30:20 Asia/Jakarta] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/igrakota/public_html/perwanida/config/koneksi.php on line 38
+[31-Aug-2023 13:30:20 Asia/Jakarta] PHP Notice:  Undefined index: ee11cbb19052e40b07aac0ca060c23ee in /home/igrakota/public_html/perwanida/index.php on line 187
+[31-Aug-2023 13:30:20 Asia/Jakarta] PHP Fatal error:  Call to undefined function mysql_query() in /home/igrakota/public_html/perwanida/index.php on line 189
+[31-Aug-2023 13:30:21 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/igrakota/public_html/perwanida/config/koneksi.php on line 9
