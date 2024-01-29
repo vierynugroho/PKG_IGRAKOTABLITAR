@@ -181,7 +181,7 @@
                                     </button>
                                 </h2>
                                 <div id="collapsePenilaian"
-                                     class="accordion-collapse collapse show"
+                                     class="accordion-collapse collapse"
                                      aria-labelledby="headingOne"
                                      data-bs-parent="#keteranganPenilaian">
                                     <div class="accordion-body">
@@ -231,7 +231,7 @@
                                         </button>
                                     </h2>
                                     <div id="collapseBobot"
-                                         class="accordion-collapse collapse show"
+                                         class="accordion-collapse collapse"
                                          aria-labelledby="headingOne"
                                          data-bs-parent="#keteranganPenilaian">
                                         <div class="accordion-body">
