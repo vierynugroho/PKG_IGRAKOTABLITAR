@@ -144,19 +144,15 @@ if (isset($_GET['logout'])) {
                         <span>Dashboard</span></a>
                     <span class="sr-only">(current)</span>
                 </li>
-
-
+                <!-- [START] Kepala Sekolah / Wakil Kepala Sekolah -->
                 <?php if ($_SESSION[md5('level')] == 3 || $_SESSION[md5('level')] == 2) : ?>
 
-                <!-- Divider -->
                 <hr class="sidebar-divider">
 
-                <!-- Heading -->
                 <div class="sidebar-heading">
                     Data
                 </div>
 
-                <!-- Nav Item - Pages Pengguna -->
                 <li class="nav-item"
                     href="index.php?p=memilihpen">
                     <a class="nav-link"
@@ -165,12 +161,6 @@ if (isset($_GET['logout'])) {
                         <span>Memilih Penilai</span>
                     </a>
                 </li>
-                <!-- tampilan kebanyakan -->
-                <!-- <li class="nav-item" href="index.php?p=melakukanpen">
-        <a class="nav-link" href="index.php?p=melakukanpen">
-          <i class="fas fa-fw fa-tasks"></i>
-          <span>Penilaian Kinerja</span></a>
-      </li> -->
                 <li class="nav-item"
                     href="index.php?p=melakukanpen">
                     <a class="nav-link"
@@ -179,7 +169,9 @@ if (isset($_GET['logout'])) {
                         <span>Penilaian Kinerja</span></a>
                 </li>
                 <?php endif; ?>
-                <!-- Nav Item - Guru -->
+                <!-- [END] Kepala Sekolah / Wakil Kepala Sekolah -->
+
+                <!-- [START] GURU -->
                 <li class="nav-item"
                     href="index.php?p=laporanpen?idta=<?= get_tahun_ajar_id() ?>">
                     <a class="nav-link"
@@ -187,6 +179,7 @@ if (isset($_GET['logout'])) {
                         <i class="fas fa-fw fa-file"></i>
                         <span>Laporan Penilaian Kinerja</span></a>
                 </li>
+                <!-- [END] GURU -->
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">

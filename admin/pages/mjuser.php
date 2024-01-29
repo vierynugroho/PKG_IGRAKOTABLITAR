@@ -64,6 +64,66 @@
                 </div>
             </div>
 
+            <div class="card shadow mt-3">
+                <div class="card-header bg-success">
+                    <h6 class="fw-bold text-light">Keterangan</h6>
+                </div>
+                <div class="card-body">
+                    <div class="accordion"
+                         id="keteranganRole">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"
+                                id="headingOne">
+                                <button class="accordion-button"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapsePenilaian"
+                                        aria-expanded="true"
+                                        aria-controls="collapsePenilaian">
+                                    Keterangan Role User
+                                </button>
+                            </h2>
+                            <div id="collapsePenilaian"
+                                 class="accordion-collapse collapse"
+                                 aria-labelledby="headingOne"
+                                 data-bs-parent="#keteranganRole">
+                                <div class="accordion-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Level</th>
+                                                    <th>Keterangan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>0</td>
+                                                    <td>Tata Usaha</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Guru</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Wakil Kepala Sekolah</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Kepala Sekolah</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <?php
             $btn = "Tambah";
             if (isset($_GET['ubah'])) {

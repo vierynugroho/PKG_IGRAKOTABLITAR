@@ -13,14 +13,16 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.php?p=home"><i class="fas fa fa-home text-success"></i></a></li>
-            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            <li class="breadcrumb-item active"
+                aria-current="page">Dashboard</li>
         </ol>
     </nav>
     <div class="shadow mb-4 p-3">
 
         <div class="jumbotron">
             <div class="container text-center">
-                <img src="./../assets/img/logo_ra.png" class="img-logo img-fluid">
+                <img src="./../assets/img/logo_ra.png"
+                     class="img-logo img-fluid">
                 <h3>RA Perwanida Blitar</h3>
             </div>
         </div>

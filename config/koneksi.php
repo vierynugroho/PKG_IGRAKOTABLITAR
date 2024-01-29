@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Jakarta');
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'dbpk_final';
+$db = 'db_kosong';
 
 $con = mysqli_connect($host, $user, $pass, $db);
 
@@ -240,4 +240,3 @@ function penilaian_per_guru($penilai_detail)
         return "<span class='text-danger'><i class='fas fa-times-circle'></i> Belum Dinilai</span>";
     }
 }
-?>

@@ -71,19 +71,18 @@
             $_SESSION[md5('user')] = $row['nip'];
             $_SESSION[md5('nama')] = $nama;
             $_SESSION[md5('level')] = $level;
+
+            // ADMIN / TATA USAHA
             if ($level == 0) {
-                // echo "<script>document.location='admin/index.php';</script>";
                 header('location:admin/index.php');
             } else {
                 header('location:index.php');
-                // echo "<script>document.location='index.php';</script>";
             }
         } else {
             $_SESSION["flash"]["type"] = "danger";
             $_SESSION["flash"]["head"] = "Login Gagal";
             $_SESSION["flash"]["msg"] = "NIP/Password Salah!";
             echo "<script>document.location='login.php';</script>";
-            //header("location:login.php");
         }
     }
     ?>
