@@ -89,6 +89,7 @@ if (isset($_GET['setaktif'])) {
                 $id_periode = isset($_GET['id_periode']) ? mysqli_real_escape_string($con, htmlspecialchars($_GET['id_periode'])) : "";
                 $sql = "SELECT * FROM periode WHERE id_periode = $id_periode";
                 $q = mysqli_query($con, $sql);
+
                 $data = [];
                 while ($row = mysqli_fetch_assoc($q)) {
                     $id_periode = $row['id_periode'];
@@ -171,9 +172,23 @@ if (isset($_GET['setaktif'])) {
                                         <select name="semester"
                                                 id="semester"
                                                 class="form-select form-select-sm">
+                                            <?php
+                                            $sql = "SELECT * FROM periode WHERE id_periode = $id_periode";
+                                            $q = mysqli_query($con, $sql);
+                                            $row = mysqli_fetch_assoc($q);
+
+                                            $semester = $row['semester'];
+
+
+                                            if ($_GET['ubah']) { ?>
+                                            <option value="<?= $semester ?>"
+                                                    selected
+                                                    hidden> <?= $semester ?> </option>
+                                            <?php } else { ?>
                                             <option value=""
                                                     selected
                                                     hidden> -- Semester -- </option>
+                                            <?php } ?>
                                             <option value="Ganjil">Ganjil</option>
                                             <option value="Genap">Genap</option>
                                         </select>
