@@ -403,7 +403,6 @@ if (isset($_GET['logout'])) {
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <main role="main"
-                              class="container"
                               id="page-wraper">
                             <?php
                         if (isset($_GET['p'])) {

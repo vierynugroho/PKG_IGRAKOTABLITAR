@@ -550,7 +550,6 @@ $(document).ready(function() {
             url: _url,
             success: function(result) {
                 var res = JSON.parse(result);
-                console.log(res);
                 $("#td_nip").html(res.nip);
                 $("#td_jabatan").html(res.jabatan);
                 $("#td_password").html(res.password);
