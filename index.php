@@ -158,7 +158,7 @@ if (isset($_GET['logout'])) {
                     <a class="nav-link"
                        href="index.php?p=memilihpen">
                         <i class="fas fa-fw fa-users"></i>
-                        <span>Memilih Penilai</span>
+                        <span>Memilih Dinilai</span>
                     </a>
                 </li>
                 <li class="nav-item"

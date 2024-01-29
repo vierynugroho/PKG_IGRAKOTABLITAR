@@ -99,19 +99,35 @@
                                             <tbody>
                                                 <tr>
                                                     <td>0</td>
-                                                    <td>Tata Usaha</td>
+                                                    <td>
+                                                        <h6 class="fw-bold">Tata Usaha</h6>
+                                                        <p>Manajemen Pengguna, Kompetensi, Periode, Dan Role Pengguna
+                                                        </p>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>1</td>
-                                                    <td>Guru</td>
+                                                    <td>
+                                                        <h6 class="fw-bold">Guru</h6>
+                                                        <p>Menerima Laporan Hasil Penilaian
+                                                        </p>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>2</td>
-                                                    <td>Wakil Kepala Sekolah</td>
+                                                    <td>
+                                                        <h6 class="fw-bold">Wakil Kepala Sekolah</h6>
+                                                        <p>Manajemen Penilaian Guru, Penilaian Kinerja, Laporan Kinerja
+                                                        </p>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>3</td>
-                                                    <td>Kepala Sekolah</td>
+                                                    <td>
+                                                        <h6 class="fw-bold">Kepala Sekolah</h6>
+                                                        <p>Manajemen Penilaian Guru, Penilaian Kinerja, Laporan Kinerja
+                                                        </p>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -206,6 +222,8 @@
                                         <input type="number"
                                                class="form-control"
                                                id="level"
+                                               min="0"
+                                               max="3"
                                                name="level"
                                                value="<?= isset($level) ? $level : ""; ?>"
                                                placeholder="Level">
