@@ -23,6 +23,8 @@ if ($_POST['nip_dinilai']) {
 			header("location:../index.php?p=melakukanpen");
 		}
 	}
+
+	// penilaian
 	$sql = "INSERT INTO penilaian (id_penilai_detail, id_isi, hasil_nilai) VALUES ";
 	$i = 0;
 	foreach ($_POST as $k => $v) {
@@ -37,6 +39,7 @@ if ($_POST['nip_dinilai']) {
 			$i++;
 		}
 	}
+
 	$insert = mysqli_query($con, $sql);
 	if ($insert) {
 

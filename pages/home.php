@@ -52,7 +52,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Jumlah Guru</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= get_count_user(6); ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= get_count_user(1); ?></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-user-friends fa-2x text-gray-300"></i>
@@ -94,7 +94,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                     Jumlah Tata Usaha</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= get_count_user(7) ?></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= get_count_user(0) ?></div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-user-shield fa-2x text-gray-300"></i>
@@ -139,12 +139,12 @@
                                 <select class="form-select cb_guru">
                                     <option value="">Semua Guru</option>
                                     <?php
-										$sql = "SELECT * FROM user a JOIN jenis_user b  ON a.id_jenis_user = b.id_jenis_user WHERE b.level = 1";
-										$q = mysqli_query($con, $sql);
-										while ($row = mysqli_fetch_array($q)) {
-											echo "<option value='$row[nip]'>$row[nama_guru]</option>";
-										}
-										?>
+                                        $sql = "SELECT * FROM user a JOIN jenis_user b  ON a.id_jenis_user = b.id_jenis_user WHERE b.level = 1";
+                                        $q = mysqli_query($con, $sql);
+                                        while ($row = mysqli_fetch_array($q)) {
+                                            echo "<option value='$row[nip]'>$row[nama_guru]</option>";
+                                        }
+                                        ?>
                                 </select>
                             </div>
                         </form>
@@ -160,10 +160,10 @@
 </div>
 <?php
 
-	echo "<script>";
-	// tertinggi
-	$id_periode = get_tahun_ajar_id();
-	$sql = "SELECT
+    echo "<script>";
+    // tertinggi
+    $id_periode = get_tahun_ajar_id();
+    $sql = "SELECT
 			d.nip,
 			d.nama_guru,
 			SUM(a.hasil_nilai) as nilai,
@@ -187,29 +187,29 @@
 									)
 		ORDER BY nilai DESC
 		";
-	$q = mysqli_query($con, $sql);
-	$i = 0;
-	echo "var data_tertinggi = [";
-	while ($b = mysqli_fetch_array($q)) {
-		$a[] = array('nilai' => get_tot_nilai($b['nip'], get_tahun_ajar_id()), 'nama_guru' => $b['nama_guru']);;
-	}
-	arsort($a);
-	//while($row = mysql_fetch_array($q)){
-	foreach ($a as $key => $row) {
-		if ($i < 5) {
-			if ($i == 0) {
-				echo "{nama:'$row[nama_guru]', nilai:$row[nilai]}";
-			} else {
-				echo ", {nama:'$row[nama_guru]', nilai:$row[nilai]}";
-			}
-		}
-		$i++;
-	}
-	echo "];";
+    $q = mysqli_query($con, $sql);
+    $i = 0;
+    echo "var data_tertinggi = [";
+    while ($b = mysqli_fetch_array($q)) {
+        $a[] = array('nilai' => get_tot_nilai($b['nip'], get_tahun_ajar_id()), 'nama_guru' => $b['nama_guru']);;
+    }
+    arsort($a);
+    //while($row = mysql_fetch_array($q)){
+    foreach ($a as $key => $row) {
+        if ($i < 5) {
+            if ($i == 0) {
+                echo "{nama:'$row[nama_guru]', nilai:$row[nilai]}";
+            } else {
+                echo ", {nama:'$row[nama_guru]', nilai:$row[nilai]}";
+            }
+        }
+        $i++;
+    }
+    echo "];";
 
-	echo "\n";
-	// terendah
-	$sql = "SELECT
+    echo "\n";
+    // terendah
+    $sql = "SELECT
 			d.nip,
 			d.nama_guru,
 			SUM(a.hasil_nilai) as nilai,
@@ -232,28 +232,28 @@
 										FROM dual
 									)
 		ORDER BY nilai ASC";
-	$q = mysqli_query($con, $sql);
-	$i = 0;
-	echo "var data_terendah = [";
-	$a = [];
-	while ($b = mysqli_fetch_array($q)) {
-		$a[] = array('nilai' => get_tot_nilai($b['nip'], get_tahun_ajar_id()), 'nama_guru' => $b['nama_guru']);;
-	}
-	asort($a);
-	foreach ($a as $key => $row) {
-		if ($i < 5) {
-			if ($i == 0) {
-				echo "{nama:'$row[nama_guru]', nilai:$row[nilai]}";
-			} else {
-				echo ", {nama:'$row[nama_guru]', nilai:$row[nilai]}";
-			}
-		}
-		$i++;
-	}
-	echo "];";
-	echo "\n";
-	echo "</script>";
-	?>
+    $q = mysqli_query($con, $sql);
+    $i = 0;
+    echo "var data_terendah = [";
+    $a = [];
+    while ($b = mysqli_fetch_array($q)) {
+        $a[] = array('nilai' => get_tot_nilai($b['nip'], get_tahun_ajar_id()), 'nama_guru' => $b['nama_guru']);;
+    }
+    asort($a);
+    foreach ($a as $key => $row) {
+        if ($i < 5) {
+            if ($i == 0) {
+                echo "{nama:'$row[nama_guru]', nilai:$row[nilai]}";
+            } else {
+                echo ", {nama:'$row[nama_guru]', nilai:$row[nilai]}";
+            }
+        }
+        $i++;
+    }
+    echo "];";
+    echo "\n";
+    echo "</script>";
+    ?>
 
 <script type="text/javascript"
         src="assets/plugins/canvas/canvasjs.min.js"></script>

@@ -181,15 +181,27 @@
                                                class="col-sm-3 control-form-label col-form-label-sm">Penilai</label>
                                         <div class="col-sm-9">
                                             <select class="form-control form-control-sm sel-penilai"
-                                                    multiple
                                                     id="ket"
-                                                    name="ket">
-                                                <option value="0">Kepala Sekolah</option>
-                                                <option value="1">Rekan Kerja</option>
-                                                <option value="2">Wakil Kepala Sekolah</option>
+                                                    name="ket"
+                                                    readonly>
+                                                <option value="0"
+                                                        selected>Kepala Sekolah</option>
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="isi_kompetensi"
+                                               class="col-sm-3 control-form-label col-form-label-sm text-danger fw-bold">Catatan</label>
+                                        <div class="col-sm-9">
+
+                                            <p class="text-muted fst-italic">*Setiap Menambah Isi Kompetensi, Kepala
+                                                Sekolah
+                                                Diharuskan Melakukan
+                                                Penilaian Ulang</p>
+
+                                        </div>
+                                    </div>
+
                                     <input type="hidden"
                                            name="penilai"
                                            id="penilai">

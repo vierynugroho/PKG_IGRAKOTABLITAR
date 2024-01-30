@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Jakarta');
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'dbpk_final';
+$db = 'db_kosong';
 
 $con = mysqli_connect($host, $user, $pass, $db);
 
@@ -125,10 +125,7 @@ function get_tot_nilai($nip_user = '', $id_periode = '')
 				GROUP BY tbnilai.penilai";
     //echo $sql;
     $q = mysqli_query($con, $sql);
-    $nno = 0;
     $tot_arr['atasan'] = 0;
-    $tot_arr['guru'] = 0;
-    $tot_arr['sendiri'] = 0;
     while ($row = mysqli_fetch_array($q)) {
         $tot = 0;
         foreach ($data_kompetensi as $key => $value) {
@@ -139,31 +136,17 @@ function get_tot_nilai($nip_user = '', $id_periode = '')
 
         if ($row['level'] == 2 || $row['level'] == 3) {
             $tot_arr['atasan'] += $tot;
-        } else if ($row['level'] == 1 && $row['nip_penilai'] != $nip_user) {
-            $tot_arr['guru'] += $tot;
-        } else {
-            $tot_arr['sendiri'] += $tot;
         }
     }
 
     $sql = "SELECT * FROM periode WHERE id_periode = $id_periode";
     $q = mysqli_query($con, $sql);
     $row = mysqli_fetch_array($q);
-    if ($row['setting'] != '') {
-        $set = explode(";", $row['setting']);
-
-        $set[0] = $set[0] / 100;
-        $set[1] = $set[1] / 100;
-        $set[2] = $set[2] / 100;
-    } else {
-        $set[0] = 0.5;
-        $set[1] = 0.3;
-        $set[2] = 0.2;
+    if ($row['setting'] == '') {
+        $row['setting'] = 100;
     }
 
-
-    $ak = ($tot_arr['atasan'] * $set[0]) + ($tot_arr['guru'] * $set[1]) + ($tot_arr['sendiri'] * $set[2]);
-    return number_format($ak, 2);
+    return number_format($tot, 2);
 }
 
 // TODO add method query
@@ -176,10 +159,10 @@ function get_count($table)
     return $data[0];
 }
 
-function get_count_user($jenis_user)
+function get_count_user($level)
 {
     global $con;
-    $data_user_sql = "SELECT COUNT(id_jenis_user) FROM user WHERE id_jenis_user = $jenis_user";
+    $data_user_sql = "SELECT COUNT(user.id_jenis_user) FROM user JOIN jenis_user ON jenis_user.id_jenis_user = user.id_jenis_user WHERE level = $level";
     $data_user_query = mysqli_query($con, $data_user_sql);
     $data_user = mysqli_fetch_array($data_user_query);
     return $data_user[0];

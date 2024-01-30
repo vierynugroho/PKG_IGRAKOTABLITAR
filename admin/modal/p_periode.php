@@ -8,20 +8,13 @@ if (isset($_POST['btnSimpan'])) {
 	$semester = isset($_POST['semester']) ? mysqli_real_escape_string($con, htmlspecialchars($_POST['semester'])) : "";
 	$status_periode = 1;
 
-	$atasan = isset($_POST['atasan']) ? mysqli_real_escape_string($con, htmlspecialchars($_POST['atasan'])) : "";
-	$rekan = isset($_POST['rekan']) ? mysqli_real_escape_string($con, htmlspecialchars($_POST['rekan'])) : "";
-	$diri = isset($_POST['diri']) ? mysqli_real_escape_string($con, htmlspecialchars($_POST['diri'])) : "";
+	$kepalaSekolah = isset($_POST['kepalaSekolah']) ? mysqli_real_escape_string($con, htmlspecialchars($_POST['kepalaSekolah'])) : "";
 
-	$tot = $atasan + $rekan + $diri;
-	echo "$tot = $atasan+$rekan+$diri";
+	if ($kepalaSekolah == '100') {
 
-	if ($tot == 100) {
-
-		$setting = "$atasan;$rekan;$diri";
+		$setting = $kepalaSekolah;
 
 		if ($btn == "Tambah") {
-
-
 			$ssq = "SELECT * FROM periode WHERE tahun_ajar = $tahun_ajar AND LOWER(semester) = LOWER('$semester')";
 			$q = mysqli_query($con, $ssq);
 			if (mysqli_num_rows($q) > 0) {
@@ -30,7 +23,6 @@ if (isset($_POST['btnSimpan'])) {
 				$ssq = "UPDATE periode SET status_periode = 0";
 				mysqli_query($con, $ssq);
 				$sql = "INSERT INTO periode (tahun_ajar, semester, status_periode, setting) VALUES( '$tahun_ajar', '$semester', '$status_periode', '$setting') ";
-
 			}
 		} else {
 			$sql = "UPDATE periode SET tahun_ajar = '$tahun_ajar', semester = '$semester', setting='$setting' WHERE id_periode = '$id_periode'";
@@ -43,15 +35,15 @@ if (isset($_POST['btnSimpan'])) {
 			$_SESSION["flash"]["msg"] = "Data berhasil disimpan!";
 		} else {
 			$_SESSION["flash"]["type"] = "danger";
-			$_SESSION["flash"]["head"] = "Terjadi Kesalahan";
+			$_SESSION["flash"]["head"] = "Terjadi Kesalahan QUERY";
 			$_SESSION["flash"]["msg"] = "Data gagal disimpan! "; //.mysql_error();
 		}
 		header("location:../index.php?p=mperiode");
 	} else {
 
 		$_SESSION["flash"]["type"] = "danger";
-		$_SESSION["flash"]["head"] = "Terjadi Kesalahan";
-		$_SESSION["flash"]["msg"] = "Data gagal disimpan! "; //.mysql_error();
+		$_SESSION["flash"]["head"] = "Terjadi Kesalahan DATA TOT TIDAK 100";
+		$_SESSION["flash"]["msg"] = "Data gagal disimpan!"; //.mysql_error();
 		header("location:../index.php?p=mperiode");
 	}
 }
@@ -82,5 +74,3 @@ if (isset($_GET['id_periode'])) {
 	}
 	echo json_encode($data);
 }
-
-?>
