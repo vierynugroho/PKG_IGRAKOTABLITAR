@@ -5,7 +5,7 @@ if (isset($_POST['btnSimpan'])) {
 
 	$id_isi = isset($_POST['id_isi']) ? mysqli_real_escape_string($con, htmlspecialchars($_POST['id_isi'])) : "";
 	$id_kompetensi = isset($_POST['id_kompetensi']) ? mysqli_real_escape_string($con, htmlspecialchars($_POST['id_kompetensi'])) : "";
-	$isi_kompetensi = isset($_POST['isi_kompetensi']) ? mysqli_real_escape_string($con, htmlspecialchars($_POST['isi_kompetensi'])) : "";
+	$isi_kompetensi = isset($_POST['isi_kompetensi']) ? mysqli_real_escape_string($con, $_POST['isi_kompetensi']) : "";
 	$ket = isset($_POST['ket']) ? mysqli_real_escape_string($con, htmlspecialchars($_POST['ket'])) : "";
 
 
