@@ -269,6 +269,12 @@
 
                     <!-- KETERANGAN -->
 
+                    <?php
+                        $id_penilai = isset($_GET['id']) ? mysqli_real_escape_string($con, htmlspecialchars($_GET['id'])) : "";
+                        $sql = "SELECT a.id_penilai, a.nip, b.nama_guru, c.jabatan FROM penilai a JOIN user b ON a.nip = b.nip JOIN jenis_user c ON b.id_jenis_user = c.id_jenis_user WHERE a.id_penilai = '$id_penilai'";
+                        $q = mysqli_query($con, $sql);
+                        $row = mysqli_fetch_array($q);
+                        ?>
                     <form class="form-horizontal p-2"
                           method="post"
                           action="modal/p_nilai.php">
@@ -278,7 +284,7 @@
                         <input type="hidden"
                                name="nip_penilai"
                                value="<?= $_SESSION[md5('user')]; ?>">
-                        <nav class="">
+                        <nav>
                             <div class="nav nav-tabs"
                                  id="nav-tab"
                                  role="tablist">

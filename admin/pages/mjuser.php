@@ -273,16 +273,14 @@
                                     <td><?= $row['jabatan']; ?></td>
                                     <td><?= $row['level']; ?></td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm btn_info m-1"
+                                        <button class="btn btn-primary btn-sm btn_info_jenis_user m-1"
                                                 id="<?= $row['id_jenis_user']; ?>"><span><i class="fas fa-search"></i>
                                                 Detail</span></button>
                                         <a href="index.php?p=mjuser&ubah=true&id_jenis_user=<?= $row['id_jenis_user']; ?>"
                                            class="btn btn-warning btn-sm m-1"
                                            id="<?= $row['id_jenis_user']; ?>"><span><i class="fas fa-edit">
                                                 </i> Ubah</span></a>
-                                        <!-- 
-								<button href="#" class="btn btn-outline-danger btn-sm btn_hapus" id="<?= $row['id_jenis_user']; ?>"><span data-feather="trash-2"></span></button>
-							-->
+
                                     </td>
                                 </tr>
                                 <?php } ?>
@@ -375,7 +373,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $(".btn_info").click(function() {
+    $(".btn_info_jenis_user").click(function() {
         var id = $(this).attr("id");
         var _url = "modal/p_jenis_user.php?id_jenis_user=" + id;
         $.ajax({
@@ -388,7 +386,7 @@ $(document).ready(function() {
         });
         $('.infolengkap').modal('show');
     });
-    $(".btn_hapus").click(function() {
+    $(".btn_hapus_jenis_user").click(function() {
         var id = $(this).attr("id");
         $("#id_delete").val(id);
         $('.hapusdata').modal('show');

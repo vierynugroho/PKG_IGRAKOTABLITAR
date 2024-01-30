@@ -52,4 +52,3 @@ if ($_POST['nip_dinilai']) {
 
 	header("location:../index.php?p=melakukanpen");
 }
-?>

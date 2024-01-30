@@ -523,7 +523,121 @@ if (isset($_GET['logout'])) {
 
         let table = new DataTable('#myTable', {
             responsive: true
-        })
+        });
+
+        $('#myTable').on('draw.dt', function() {
+            // Perbarui event listener di sini
+
+            // ! Isi Kompetensi
+            $(document).ready(function() {
+                $(".btn_info_misikom").click(function() {
+                    var id = $(this).attr("id");
+                    var _url = "modal/p_isi_kompetensi.php?id_isi=" + id;
+                    $.ajax({
+                        url: _url,
+                        success: function(result) {
+                            var res = JSON.parse(result);
+                            $("#td_jenis_kompetensi").html(res.nama_kompetensi);
+                            $("#td_isi_kompetensi").html(res.isi_kompetensi);
+                        }
+                    });
+                    $('.infolengkap').modal('show');
+                });
+                $(".btn_hapus_misikom").click(function() {
+                    var id = $(this).attr("id");
+                    $("#id_delete").val(id);
+                    $('.hapusdata').modal('show');
+                });
+                $('.sel-penilai').selectpicker();
+                $(".sel-penilai").change(function() {
+                    var a = $(this).val();
+                    var b = a.join();
+                    alert($("#penilai").val(b));
+                    $("#penilai").val(b);
+                });
+            });
+
+            // ! Jenis Kompetensi
+            $(document).ready(function() {
+                $(".btn_info_jenis_kompetensi").click(function() {
+                    var id = $(this).attr("id");
+                    var _url = "modal/p_jenis_kompetensi.php?id_kompetensi=" + id;
+                    $.ajax({
+                        url: _url,
+                        success: function(result) {
+                            var res = JSON.parse(result);
+                            console.log(res);
+                            $("#td_jenis_kompetensi").html(res.nama_kompetensi);
+                            $("#td_bobot").html(res.bobot_kompetensi);
+                        }
+                    });
+                    $('.infolengkap').modal('show');
+                });
+
+                $(".btn_hapus_jenis_kompetensi").click(function() {
+                    var id = $(this).attr("id");
+                    $("#id_delete").val(id);
+                    $('.hapusdata').modal('show');
+                });
+            });
+
+            // ! User
+            $(document).ready(function() {
+                $(".btn_info_user").click(function() {
+                    var id = $(this).attr("id");
+                    var _url = "modal/p_user.php?nip=" + id;
+                    $.ajax({
+                        url: _url,
+                        success: function(result) {
+                            var res = JSON.parse(result);
+                            console.log(res);
+                            $("#td_nip").html(res.nip);
+                            $("#td_jabatan").html(res.jabatan);
+                            $("#td_password").html(res.password);
+                            $("#td_nama_guru").html(res.nama_guru);
+                            $("#td_status_guru").html(res.status_guru);
+                            $("#td_alamat").html(res.alamat);
+                            $("#td_ttl").html(res.tempat_lahir + ", " + res
+                                .tgl_lahir);
+                            $("#td_jk").html(res.jenis_kelamin == "L" ?
+                                "Laki-laki" : "Perempuan");
+                            $("#td_status_nikah").html(res.status_nikah == "B" ?
+                                "Belum Nikah" :
+                                "Sudah Nikah");
+                            $("#td_notelp").html(res.no_telp);
+                        }
+                    });
+                    $('.infolengkap').modal('show');
+                });
+                $(".btn_hapus_user").click(function() {
+                    var id = $(this).attr("id");
+                    $("#id_delete").val(id);
+                    $('.hapusdata').modal('show');
+                });
+            });
+
+            // ! Jenis User
+            $(document).ready(function() {
+                $(".btn_info_jenis_user").click(function() {
+                    var id = $(this).attr("id");
+                    var _url = "modal/p_jenis_user.php?id_jenis_user=" + id;
+                    $.ajax({
+                        url: _url,
+                        success: function(result) {
+                            var res = JSON.parse(result);
+                            $("#td_jabatan").html(res.jabatan);
+                            $("#td_level").html(res.level);
+                        }
+                    });
+                    $('.infolengkap').modal('show');
+                });
+                $(".btn_hapus_jenis_user").click(function() {
+                    var id = $(this).attr("id");
+                    $("#id_delete").val(id);
+                    $('.hapusdata').modal('show');
+                });
+            });
+        });
         </script>
 
         <script type="text/javascript">

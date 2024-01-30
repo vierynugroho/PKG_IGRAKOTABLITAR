@@ -198,7 +198,7 @@
                                     <td><?= $row['nama_kompetensi']; ?></td>
                                     <td><?= $row['bobot_kompetensi']; ?></td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm btn_info m-1"
+                                        <button class="btn btn-primary btn-sm btn_info_jenis_kompetensi m-1"
                                                 id="<?= $row['id_kompetensi']; ?>"><span><i class="fas fa-search"></i>
                                                 Detail</span></button>
                                         <a href="index.php?p=mjeniskom&ubah=true&id_kompetensi=<?= $row['id_kompetensi']; ?>"
@@ -206,7 +206,7 @@
                                            id="<?= $row['id_kompetensi']; ?>"><span><i class="fas fa-edit m-1"></i>
                                                 Ubah</span></a>
                                         <button href="#"
-                                                class="btn btn-danger btn-sm btn_hapus m-1"
+                                                class="btn btn-danger btn-sm btn_hapus_jenis_kompetensi m-1"
                                                 id="<?= $row['id_kompetensi']; ?>"><span><i class="fas fa-trash"></i>
                                                 Hapus</span></button>
                                     </td>
@@ -307,7 +307,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $(".btn_info").click(function() {
+    $(".btn_info_jenis_kompetensi").click(function() {
         var id = $(this).attr("id");
         var _url = "modal/p_jenis_kompetensi.php?id_kompetensi=" + id;
         $.ajax({
@@ -322,23 +322,10 @@ $(document).ready(function() {
         $('.infolengkap').modal('show');
     });
 
-    $(".btn_hapus").click(function() {
+    $(".btn_hapus_jenis_kompetensi").click(function() {
         var id = $(this).attr("id");
         $("#id_delete").val(id);
         $('.hapusdata').modal('show');
     });
-
-    // $('#exampleModal').on('shown.bs.modal', function() {
-    //     var _url = "modal/p_jenis_kompetensi.php?sum";
-    //     $.ajax({
-    //         url: _url,
-    //         success: function(result) {
-    //             var sum = result;
-    //             var max = 100 - sum;
-    //             console.log(max);
-    //             $("#bobot_kompetensi").attr("max", max);
-    //         }
-    //     });
-    // });
 });
 </script>

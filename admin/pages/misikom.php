@@ -69,7 +69,7 @@
                 <?php
                 $btn = "Tambah";
                 if (isset($_GET['ubah'])) {
-                    $id_isi = isset($_GET['id_isi']) ? mysqli_real_escape_string($con, htmlspecialchars($_GET['id_isi'])) : "";
+                    $id_isi = isset($_GET['id_isi']) ? mysqli_real_escape_string($con, htmlspecialchars_decode($_GET['id_isi'])) : "";
                     $sql = "SELECT * FROM isi_kompetensi a JOIN jenis_kompetensi b ON a.id_kompetensi = b.id_kompetensi ORDER BY b.id_kompetensi ASC";
                     $q = mysqli_query($con, $sql);
                     $data = [];
@@ -137,7 +137,8 @@
                                         <div class="col-sm-9">
                                             <select class="form-select form-select-sm"
                                                     id="id_kompetensi"
-                                                    name="id_kompetensi">
+                                                    name="id_kompetensi"
+                                                    required>
 
                                                 <?php if ($_GET['ubah']) { ?>
                                                 <option value="<?= $id_kompetensi ?>"
@@ -171,7 +172,7 @@
                                             <textarea class="form-control form-control-sm"
                                                       id="editor"
                                                       name="isi_kompetensi"
-                                                      placeholder="Isi Kompetensi"
+                                                      placeholder="Isi Kompetensi * wajib di isi"
                                                       rows="10"><?= isset($isi_kompetensi) ? $isi_kompetensi : ""; ?></textarea>
                                         </div>
                                     </div>
@@ -184,6 +185,8 @@
                                                     id="ket"
                                                     name="ket">
                                                 <option value="0">Kepala Sekolah</option>
+                                                <option value="1">Rekan Kerja</option>
+                                                <option value="2">Wakil Kepala Sekolah</option>
                                             </select>
                                         </div>
                                     </div>
@@ -254,14 +257,14 @@
                                             echo $ret;
                                             ?></td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm btn_info m-1"
+                                        <a class="btn btn-primary btn-sm btn_info_misikom m-1"
                                            id="<?= $row['id_isi']; ?>"><span><i class="fas fa-search"></i>
                                                 Detail</span></a>
                                         <a href="index.php?p=misikom&ubah=true&id_isi=<?= $row['id_isi']; ?>"
                                            class="btn btn-warning btn-sm m-1"
                                            id="<?= $row['id_isi']; ?>"><span><i class="fas fa-edit"></i> Ubah</span></a>
                                         <a href="#"
-                                           class="btn btn-danger btn-sm btn_hapus m-1"
+                                           class="btn btn-danger btn-sm btn_hapus_misikom m-1"
                                            id="<?= $row['id_isi']; ?>"><span><i class="fas fa-trash"></i>
                                                 Hapus</span></a>
                                     </td>
@@ -311,7 +314,7 @@
     </div>
 
     <div class="modal fade hapusdata"
-         tabindex="-1"
+         tabindex="-8"
          role="dialog"
          aria-labelledby="mySmallModalLabel"
          aria-hidden="true">
@@ -335,7 +338,7 @@
                 </div>
                 <div class="modal-body">
                     <br>
-                    <div class="modal-text">Data Akan Dihapus</div>
+                    <div class="modal-body">Data Akan Dihapus</div>
                     <br>
                     <div class="modal-footer">
                         <input type="submit"
@@ -354,7 +357,7 @@
 
     <script type="text/javascript">
     $(document).ready(function() {
-        $(".btn_info").click(function() {
+        $(".btn_info_misikom").click(function() {
             var id = $(this).attr("id");
             var _url = "modal/p_isi_kompetensi.php?id_isi=" + id;
             $.ajax({
@@ -367,7 +370,7 @@
             });
             $('.infolengkap').modal('show');
         });
-        $(".btn_hapus").click(function() {
+        $(".btn_hapus_misikom").click(function() {
             var id = $(this).attr("id");
             $("#id_delete").val(id);
             $('.hapusdata').modal('show');
@@ -376,7 +379,40 @@
         $(".sel-penilai").change(function() {
             var a = $(this).val();
             var b = a.join();
+            alert($("#penilai").val(b));
             $("#penilai").val(b);
+        });
+    });
+
+
+    $('#myTable').on('draw.dt', function() {
+        // Perbarui event listener di sini
+        $(document).ready(function detail() {
+            $(".btn_info_misikom").click(function() {
+                var id = $(this).attr("id");
+                var _url = "modal/p_isi_kompetensi.php?id_isi=" + id;
+                $.ajax({
+                    url: _url,
+                    success: function(result) {
+                        var res = JSON.parse(result);
+                        $("#td_jenis_kompetensi").html(res.nama_kompetensi);
+                        $("#td_isi_kompetensi").html(res.isi_kompetensi);
+                    }
+                });
+                $('.infolengkap').modal('show');
+            });
+            $(".btn_hapus_misikom").click(function() {
+                var id = $(this).attr("id");
+                $("#id_delete").val(id);
+                $('.hapusdata').modal('show');
+            });
+            $('.sel-penilai').selectpicker();
+            $(".sel-penilai").change(function() {
+                var a = $(this).val();
+                var b = a.join();
+                alert($("#penilai").val(b));
+                $("#penilai").val(b);
+            });
         });
     });
     </script>

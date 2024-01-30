@@ -390,14 +390,14 @@
                                     <td><?= $row['nama_guru']; ?></td>
                                     <td><?= $row['jabatan']; ?></td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm btn_info m-1"
+                                        <button class="btn btn-primary btn-sm btn_info_user m-1"
                                                 id="<?= $row['nip']; ?>"><span><i class="fas fa-search"></i>
                                                 Detail</span></button>
                                         <a href="index.php?p=muser&ubah=true&nip=<?= $row['nip']; ?>"
                                            class="btn btn-warning btn-sm m-1"
                                            id="<?= $row['nip']; ?>"><span><i class="fas fa-edit"></i> Ubah</span></a>
                                         <button href="#"
-                                                class="btn btn-danger btn-sm btn_hapus m-1"
+                                                class="btn btn-danger btn-sm btn_hapus_user m-1"
                                                 id="<?= $row['nip']; ?>"><span><i class="fas fa-trash"></i>
                                                 Hapus</span></button>
                                     </td>
@@ -543,7 +543,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $(".btn_info").click(function() {
+    $(".btn_info_user").click(function() {
         var id = $(this).attr("id");
         var _url = "modal/p_user.php?nip=" + id;
         $.ajax({
@@ -566,7 +566,7 @@ $(document).ready(function() {
         });
         $('.infolengkap').modal('show');
     });
-    $(".btn_hapus").click(function() {
+    $(".btn_hapus_user").click(function() {
         var id = $(this).attr("id");
         $("#id_delete").val(id);
         $('.hapusdata').modal('show');

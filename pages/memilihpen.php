@@ -189,7 +189,7 @@
                                     </td>
                                     </td>
                                     <td style="vertical-align:middle">
-                                        <button class="btn btn-danger btn-sm  btn_hapus"
+                                        <button class="btn btn-danger btn-sm btn_hapus_memilih_dinilai"
                                                 data-bs-id="<?= $row['id_penilai']; ?>"><i class="fas fa-trash"></i>
                                             Hapus</button>
                                     </td>
@@ -207,7 +207,7 @@
     </div>
 </div>
 
-<div class="modal fade hapusdata"
+<div class="modal fade hapusdata_memilih_dinilai"
      tabindex="-1"
      role="dialog"
      aria-labelledby="mySmallModalLabel"
@@ -263,9 +263,9 @@ $(document).ready(function() {
     });
 
 
-    $(".btn_hapus").click(function() {
+    $(".btn_hapus_memilih_dinilai").click(function() {
         var daid = $(this).attr("data-bs-id");
-        $(".hapusdata").modal("show");
+        $(".hapusdata_memilih_dinilai").modal("show");
         $("#id_delete").val(daid);
     });
 
@@ -292,7 +292,6 @@ $(document).ready(function() {
             }
         });
     });
-
 
 });
 
