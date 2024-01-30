@@ -74,11 +74,11 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header"
                                 id="headingOne">
-                                <button class="accordion-button"
+                                <button class="accordion-button collapsed"
                                         type="button"
                                         data-bs-toggle="collapse"
                                         data-bs-target="#collapsePenilaian"
-                                        aria-expanded="true"
+                                        aria-expanded="false"
                                         aria-controls="collapsePenilaian">
                                     Keterangan Role User
                                 </button>
