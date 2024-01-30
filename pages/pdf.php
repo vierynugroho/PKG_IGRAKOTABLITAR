@@ -2,6 +2,7 @@
 
 require '../vendor/autoload.php';
 require '../config/koneksi.php';
+
 use iio\libmergepdf\Merger;
 use Dompdf\Dompdf;
 
@@ -92,27 +93,4 @@ if (isset($_GET['detail'])) {
     header('Content-Length: ' . filesize($file));
     header('Accept-Ranges: bytes');
     @readfile($file);
-    // exec('pdftk A=pdf1.pdf B=pdf2.pdf cat A1 B2 output combined.pdf');
-
 }
-
-/*   //echo $data;
-   $dompdf = new Dompdf();
-   $dompdf->loadHtml($data);
-
-   // (Optional) Setup the paper size and orientation
-   if(isset($_GET['detail'])){
-       $dompdf->setPaper('A4', 'landscape');
-   }else{
-       $dompdf->setPaper('A4', 'potrait');
-   }
-   // Render the HTML as PDF
-   $dompdf->render();
-*/
-// Output the generated PDF to Browser
-
-
-/*$dompdf->stream("laporan_kinerja_".$tgl.'pdf', array("Attachment" => false));
-
-exit(0);*/
-?>

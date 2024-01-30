@@ -14,6 +14,8 @@ while ($row = mysqli_fetch_array($q)) {
     ${"b_" . $row['nama_kompetensi']} = $row['bobot_kompetensi'];
 }
 
+
+// ! START QUERY
 $sql = "SELECT * FROM penilai a JOIN penilai_detail b ON a.id_penilai = b.id_penilai WHERE a.nip = '$nip_user' ";
 $q = mysqli_query($con, $sql);
 $id_penilai_detail = '';
@@ -27,88 +29,97 @@ while ($row = mysqli_fetch_array($q)) {
     }
     $i++;
 }
+
+$komp = '';
 $sql = "SELECT 
-						tbnilai.nip_penilai,
-						tbnilai.penilai,
-						tbnilai.level,
-						tbnilai.jabatan,
-						SUM( IF(tbnilai.nama_kompetensi = 'Pedagogik', tbnilai.nilai, 0) ) AS 'Pedagogik',
-						SUM( IF(tbnilai.nama_kompetensi = 'Kepribadian', tbnilai.nilai, 0) ) AS 'Kepribadian',
-						SUM( IF(tbnilai.nama_kompetensi = 'Sosial', tbnilai.nilai, 0) ) AS 'Sosial',
-						SUM( IF(tbnilai.nama_kompetensi = 'Profesional', tbnilai.nilai, 0) ) AS 'Profesional'
-					FROM 
-					(SELECT 
-						a.id_nilai, 
-						h.nip as nip_dinilai,
-						h.nama_guru as 'dinilai',
-						e.nip as nip_penilai, 
-						e.nama_guru as 'penilai',
-						f.jabatan,
-						f.level,
-						c.id_kompetensi,
-						c.nama_kompetensi,
-						c.bobot_kompetensi,
-						SUM(a.hasil_nilai) as nilai
-					FROM penilaian a 
-					JOIN isi_kompetensi b ON a.id_isi = b.id_isi
-					JOIN jenis_kompetensi c ON b.id_kompetensi = c.id_kompetensi
-					JOIN (penilai_detail d JOIN user e ON d.nip = e.nip JOIN jenis_user f ON f.id_jenis_user = e.id_jenis_user) ON d.id_penilai_detail = a.id_penilai_detail 
-					JOIN (penilai g JOIN user h ON g.nip = h.nip ) ON d.id_penilai = g.id_penilai
-					WHERE 
-					a.id_penilai_detail IN ($id_penilai_detail) 
-					AND g.id_periode = $id_periode
-					GROUP BY a.id_penilai_detail, c.id_kompetensi
-					ORDER BY 4) as tbnilai
-					GROUP BY tbnilai.penilai";
-//echo $sql;
+								a.id_kompetensi,
+								a.nama_kompetensi,
+								a.bobot_kompetensi,
+								COUNT(b.id_isi) as jml
+							FROM jenis_kompetensi a
+							JOIN isi_kompetensi b ON a.id_kompetensi = b.id_kompetensi
+							GROUP BY a.id_kompetensi";
 $q = mysqli_query($con, $sql);
+
+$data_kompetensi = [];
+
+while ($row = mysqli_fetch_array($q)) {
+    ${"b_" . $row['nama_kompetensi']} = $row['bobot_kompetensi'];
+    ${"jml_" . $row['nama_kompetensi']} = $row['bobot_kompetensi'];
+    $data_kompetensi[] = $row;
+}
+
+foreach ($data_kompetensi as $key => $value) {
+    $komp .= "SUM( IF(tbnilai.nama_kompetensi = '$value[nama_kompetensi]', tbnilai.nilai, 0) ) AS '$value[nama_kompetensi]', ";
+}
+
+
+$sql = "SELECT 
+								tbnilai.nip_penilai,
+								tbnilai.penilai,
+								tbnilai.level,
+								tbnilai.jabatan,
+								$komp
+								1
+							FROM 
+							(SELECT 
+								a.id_nilai, 
+								h.nip as nip_dinilai,
+								h.nama_guru as 'dinilai',
+								e.nip as nip_penilai, 
+								e.nama_guru as 'penilai',
+								f.jabatan,
+								f.level,
+								c.id_kompetensi,
+								c.nama_kompetensi,
+								c.bobot_kompetensi,
+								SUM(a.hasil_nilai) as nilai
+							FROM penilaian a 
+							JOIN isi_kompetensi b ON a.id_isi = b.id_isi
+							JOIN jenis_kompetensi c ON b.id_kompetensi = c.id_kompetensi
+							JOIN (penilai_detail d JOIN user e ON d.nip = e.nip JOIN jenis_user f ON f.id_jenis_user = e.id_jenis_user) ON d.id_penilai_detail = a.id_penilai_detail 
+							JOIN (penilai g JOIN user h ON g.nip = h.nip ) ON d.id_penilai = g.id_penilai
+							WHERE a.id_penilai_detail IN ($id_penilai_detail) AND g.id_periode = $id_periode
+							GROUP BY a.id_penilai_detail, c.id_kompetensi
+							ORDER BY 4) as tbnilai
+							GROUP BY tbnilai.penilai";
+
+$vq = mysqli_query($con, $sql);
 $nno = 0;
 echo "<br>";
-$tot_arr['atasan'] = 0;
-// $tot_arr['guru'] = 0;
-// $tot_arr['sendiri'] = 0;
+$tot_arr['kepalaSekolah'] = 0;
+
 $tot_pedagodik = 0;
 $tot_kepribadian = 0;
 $tot_sosial = 0;
 $tot_profesional = 0;
-while ($row = mysqli_fetch_array($q)) {
-    $tot = 0;
-    $pg = ($row['Pedagogik'] / 10) * 100;
-    $kp = ($row['Kepribadian'] / 5) * 100;
-    $ss = ($row['Sosial'] / 4) * 100;
-    $pr = ($row['Profesional'] / 5) * 100;
 
 
-    $tot_pedagodik += $pg;
-    $tot_kepribadian += $kp;
-    $tot_sosial += $ss;
-    $tot_profesional += $pr;
-    /* prestasi kinerja individu */
-    $tot = ($pg * ($b_Pedagogik / 100)) + ($kp * ($b_Kepribadian / 100)) + ($ss * ($b_Sosial / 100)) + ($pr * ($b_Profesional / 100));
-
-    if ($row['level'] == 2 || $row['level'] == 3) {
-        $tot_arr['atasan'] += $tot;
-    }
-}
-
-$sql = "SELECT * FROM periode WHERE id_periode = $id_periode";
-$q = mysqli_query($con, $sql);
-$row = mysqli_fetch_array($q);
-if ($row['setting'] != '') {
-    $set = explode(";", $row['setting']);
-
-    $set[0] = $set[0] / 100;
-    $set[1] = $set[1] / 100;
-    $set[2] = $set[2] / 100;
-} else {
-    $set[0] = 0.5;
-    $set[1] = 0.3;
-    $set[2] = 0.2;
-}
-
-// $ak = ($tot_arr['atasan']*$set[0]) + ($tot_arr['guru']*$set[1]) + ($tot_arr['sendiri']*$set[2]);
-//$ak = ($tot_arr['atasan']*0.5) + ($tot_arr['guru']*0.3) + ($tot_arr['sendiri']*0.2);
 ?>
+<?php
+$tot = 0;
+?>
+<script>
+var data_kompetensi = [
+    <?php
+        while ($row = mysqli_fetch_array($vq)) {
+            foreach ($data_kompetensi as $key => $value) {
+                $nil = ($row[$value['nama_kompetensi']] / $value['jml']) * 100;
+                echo "{oleh: " . $row[$value['nama_kompetensi']] . ", nilai:" . number_format($nil, 2) . "},";
+            }
+        }
+        ?>
+];
+
+var data_bar = [
+    <?php
+        echo "{oleh: 'Kepala Sekolah', nilai:" . number_format(get_tot_nilai($nip_user, $id_periode), 2) . "},";
+        ?>
+];
+
+console.log(data_bar)
+</script>
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -172,22 +183,22 @@ if ($row['setting'] != '') {
                                     <tbody>
                                         <tr>
                                             <th scope="row">1</th>
-                                            <td>682 - 840</td>
+                                            <td>300 - 400</td>
                                             <td>(A) Sangat Baik</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">2</th>
-                                            <td>525 - 681</td>
+                                            <td>200 - 299</td>
                                             <td>(B) Baik</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">3</th>
-                                            <td>366 - 524</td>
+                                            <td>100 - 200</td>
                                             <td>(C) Kurang</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">4</th>
-                                            <td>210 - 365</td>
+                                            <td>0 - 99</td>
                                             <td>(D) Sangat Kurang</td>
                                         </tr>
                                     </tbody>
@@ -288,7 +299,7 @@ thickness = 60;
 var color = d3.scaleLinear()
     //.domain([0, 50, 100])
     //.range(['#db2828', '#fbbd08', '#21ba45']);
-    .domain([0, 365, 524, 681, 840])
+    .domain([0, 100, 200, 300, 400])
     .range(['#db4639', '#FFCD42', '#48ba17', '#12ab24', '#0f9f59']);
 
 var arc = d3.arc()
@@ -339,7 +350,7 @@ var scale = svg.append('g')
     .attr('class', 'scale');
 
 scale.append('text')
-    .text(840)
+    .text(400)
     .attr('text-anchor', 'middle')
     .attr('x', (size - thickness / 2));
 
@@ -349,7 +360,7 @@ scale.append('text')
     .attr('x', -(size - thickness / 2));
 /*
 setInterval(function() {
-    update(Math.random() * 840);
+    update(Math.random() * 400);
 }, 1500);*/
 //update_gauge(500);
 update_gauge(<?= $ak; ?>);
@@ -374,7 +385,7 @@ function update_gauge(v) {
 }
 
 function arcTween(transition, v) {
-    var newAngle = v / 840 * Math.PI - Math.PI / 2;
+    var newAngle = v / 400 * Math.PI - Math.PI / 2;
     transition.attrTween('d', function(d) {
         var interpolate = d3.interpolate(d.endAngle, newAngle);
         return function(t) {
@@ -411,13 +422,13 @@ function textKet(transition, v) {
 function rentang(v) {
     v = Number(v);
 
-    if (v <= 840 && v >= 682) {
+    if (v <= 400 && v >= 300) {
         return "Sangat Baik";
-    } else if (v <= 681 && v >= 525) {
+    } else if (v <= 299 && v >= 200) {
         return "Baik";
-    } else if (v <= 524 && v >= 366) {
+    } else if (v <= 199 && v >= 100) {
         return "Kurang";
-    } else if (v <= 365) {
+    } else if (v <= 99) {
         return "Sangat Kurang";
     } else {
         return "#";
@@ -426,21 +437,6 @@ function rentang(v) {
 </script>
 
 <script>
-var data_bar = [
-    <?php
-        echo "{oleh: 'Atasan', nilai: $tot_arr[atasan] }";
-        ?>
-];
-
-var data_kompetensi = [
-    <?php
-        echo "{oleh: 'Pedagogik', nilai: " . round($tot_pedagodik / 6, 2) . "},";
-        echo "{oleh: 'Kepribadian', nilai: " . round($tot_kepribadian / 6), 2 . " },";
-        echo "{oleh: 'Sosial', nilai: " . round($tot_sosial / 6), 2 . " },";
-        echo "{oleh: 'Profesional', nilai: " . round($tot_profesional / 6), 2 . "}";
-        ?>
-];
-
 var size_bar = $("#chart-nilai-perwakilan").width() / 2; //150,
 thickness_bar = 60;
 margin = 10;
@@ -462,7 +458,7 @@ var xScale = d3.scaleBand()
 
 var yScale = d3.scaleLinear()
     .range([bar_height, 0])
-    .domain([0, 5000]);
+    .domain([0, 500]);
 
 
 var makeYLines = () => d3.axisLeft()
@@ -617,7 +613,7 @@ var xScale = d3.scaleBand()
 
 var yScale = d3.scaleLinear()
     .range([bar_height, 0])
-    .domain([0, 10000]);
+    .domain([0, 1000]);
 
 
 var makeYLines = () => d3.axisLeft()

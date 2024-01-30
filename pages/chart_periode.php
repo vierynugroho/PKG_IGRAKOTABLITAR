@@ -69,39 +69,3 @@ while ($p_row = mysqli_fetch_array($p_q)) {
 $ret['dataPoints'] = $da;
 $as[] = $ret;
 echo json_encode($as);
-
-
-
-
-
-
-
-/*
-
-
-
-            $sql = "SELECT
-                        d.nip,
-                        d.nama_guru,
-                        IFNULL(SUM(a.hasil_nilai), 0) as nilai,
-                        COUNT(a.id_nilai) as jml
-                    FROM penilaian a
-                    JOIN penilai_detail b ON a.id_penilai_detail = b.id_penilai_detail
-                    JOIN penilai c ON b.id_penilai = c.id_penilai
-                    JOIN user d ON c.nip = d.nip
-                    WHERE c.id_periode = $p_row[id_periode] AND c.nip = '$u_row[nip]'";
-            $q = mysql_query($sql);
-            $row = mysql_fetch_array($q);
-            if($j==0){
-                $dd .= "{nama:'$row[nama_guru]',tahun_ajar:'$p_row[tahun_ajar] $p_row[semester]', nilai:$row[nilai]}";
-            }else{
-                $dd .= ", {nama:'$row[nama_guru]',tahun_ajar:'$p_row[tahun_ajar] $p_row[semester]', nilai:$row[nilai]}";
-            }
-            $daa[$row['nama_guru']][$i] = array('tahun_ajar'=> $p_row['tahun_ajar'].' '.$p_row['semester'], 'nilai'=>$row['nilai']); 
-            $j++;
-            $dd .= ",";
-
-*/
-
-
-?>

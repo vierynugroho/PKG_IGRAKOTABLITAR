@@ -4,98 +4,104 @@ require_once('../config/koneksi.php');
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="<?= base_url('/assets/img/logo_ra.ico'); ?>">
-    <title>Laporan Penilaian Kinerja</title>
-    <style>
-    .header {
-        clear: both;
-        border-bottom: 2px solid black;
-    }
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon"
+              href="<?= base_url('/assets/img/logo_ra.ico'); ?>">
+        <title>Laporan Penilaian Kinerja</title>
+        <style>
+        .header {
+            clear: both;
+            border-bottom: 2px solid black;
+        }
 
-    .img-header {
-        width: 100px;
-        float: left;
-    }
+        .img-header {
+            width: 100px;
+            float: left;
+        }
 
-    .header>h1,
-    .header>h2,
-    .header>h3 {
-        margin: 0;
-        text-align: center;
-    }
+        .header>h1,
+        .header>h2,
+        .header>h3 {
+            margin: 0;
+            text-align: center;
+        }
 
-    .header>h2,
-    .header>h3 {
-        font-weight: normal;
-    }
+        .header>h2,
+        .header>h3 {
+            font-weight: normal;
+        }
 
-    .header>hr {
-        margin: 0;
-    }
+        .header>hr {
+            margin: 0;
+        }
 
-    .main {
-        padding-top: 50px;
-    }
+        .main {
+            padding-top: 50px;
+        }
 
-    table {
-        width: 100%;
-    }
+        table {
+            width: 100%;
+        }
 
-    .footer {
-        padding-top: 50px;
-        text-align: right;
-    }
+        .footer {
+            padding-top: 50px;
+            text-align: right;
+        }
 
-    .txt_center {
-        text-align: center;
+        .txt_center {
+            text-align: center;
 
-    }
+        }
 
-    .txt_right {
-        text-align: right;
-    }
+        .txt_right {
+            text-align: right;
+        }
 
-    thead:before,
-    thead:after {
-        display: none;
-    }
+        thead:before,
+        thead:after {
+            display: none;
+        }
 
-    tbody:before,
-    tbody:after {
-        display: none;
-    }
-    </style>
-</head>
+        tbody:before,
+        tbody:after {
+            display: none;
+        }
+        </style>
+    </head>
 
-<body>
-    <div class="header">
-        <img class="img-header" src="file://<?= $_SERVER["DOCUMENT_ROOT"] . '/assets/img/logo_ra.png'; ?>" alt="Logo">
-        <h2>Laporan Penilaian Kinerja Periode
-            <?= get_tahun_ajar(); ?>
-        </h2>
-        <h1>RA Perwanida Blitar</h1>
-        <br>
-        <hr>
-    </div>
+    <body>
+        <div class="header">
+            <img class="img-header"
+                 src="file://<?= $_SERVER["DOCUMENT_ROOT"] . '/assets/img/logo_ra.png'; ?>"
+                 alt="Logo">
+            <h2>Laporan Penilaian Kinerja Periode
+                <?= get_tahun_ajar(); ?>
+            </h2>
+            <h1>RA Perwanida Blitar</h1>
+            <br>
+            <hr>
+        </div>
 
-    <div class="main">
-        <?php if (!isset($_GET['detail'])): ?>
-        <table class="table" border="1" cellspacing="0" cellpadding="5">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>NIP</th>
-                    <th>Nama</th>
-                    <th>Total Nilai</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-					$id_periode = get_tahun_ajar_id();
-					$i = 0;
-					$sql = "SELECT
+        <div class="main">
+            <?php if (!isset($_GET['detail'])) : ?>
+            <table class="table"
+                   border="1"
+                   cellspacing="0"
+                   cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>NIP</th>
+                        <th>Nama</th>
+                        <th>Total Nilai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $id_periode = get_tahun_ajar_id();
+                    $i = 0;
+                    $sql = "SELECT
 								d.nip,
 								d.nama_guru,
 								SUM(a.hasil_nilai) as nilai,
@@ -118,60 +124,61 @@ require_once('../config/koneksi.php');
 															FROM dual
 														)
 							ORDER BY nilai DESC";
-					$q = mysqli_query($con, $sql);
-					while ($row = mysqli_fetch_array($q)) {
-						?>
+                    $q = mysqli_query($con, $sql);
+                    while ($row = mysqli_fetch_array($q)) {
+                    ?>
+                    <tr>
+                        <td>
+                            <?= ++$i; ?>
+                        </td>
+                        <td>
+                            <?= $row['nip']; ?>
+                        </td>
+                        <td>
+                            <?= $row['nama_guru']; ?>
+                        </td>
+                        <td>
+                            <?= number_format($row['nilai'], 2); ?>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <?php
+        else :
+            $nip_user = $_GET['detail'];
+            $id_penilai = isset($_GET['id']) ? mysqli_real_escape_string($con, htmlspecialchars($_GET['id'])) : "";
+            $sql = "SELECT * FROM user a JOIN jenis_user b ON a.id_jenis_user = b.id_jenis_user WHERE a.nip = '$nip_user' ";
+            $q = mysqli_query($con, $sql);
+            $row = mysqli_fetch_array($q);
+        ?>
+            <table class="table"
+                   cellspacing="0">
                 <tr>
-                    <td>
-                        <?= ++$i; ?>
-                    </td>
+                    <td width="10%"><strong>NIP</strong></td>
+                    <td width="1%">:</td>
                     <td>
                         <?= $row['nip']; ?>
                     </td>
+                </tr>
+                <tr>
+                    <td><strong>Nama</strong></td>
+                    <td>:</td>
                     <td>
                         <?= $row['nama_guru']; ?>
                     </td>
+                </tr>
+                <tr>
+                    <td><strong>Jabatan</strong></td>
+                    <td>:</td>
                     <td>
-                        <?= number_format($row['nilai'], 2); ?>
+                        <?= $row['jabatan']; ?>
                     </td>
                 </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-        <?php
-		else:
-			$nip_user = $_GET['detail'];
-			$id_penilai = isset($_GET['id']) ? mysqli_real_escape_string($con, htmlspecialchars($_GET['id'])) : "";
-			$sql = "SELECT * FROM user a JOIN jenis_user b ON a.id_jenis_user = b.id_jenis_user WHERE a.nip = '$nip_user' ";
-			$q = mysqli_query($con, $sql);
-			$row = mysqli_fetch_array($q);
-			?>
-        <table class="table" cellspacing="0">
-            <tr>
-                <td width="10%"><strong>NIP</strong></td>
-                <td width="1%">:</td>
-                <td>
-                    <?= $row['nip']; ?>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Nama</strong></td>
-                <td>:</td>
-                <td>
-                    <?= $row['nama_guru']; ?>
-                </td>
-            </tr>
-            <tr>
-                <td><strong>Jabatan</strong></td>
-                <td>:</td>
-                <td>
-                    <?= $row['jabatan']; ?>
-                </td>
-            </tr>
-        </table>
-        <h4>Detail Penilaian</h4>
-        <?php
-			$sql = "SELECT 
+            </table>
+            <h4>Detail Penilaian</h4>
+            <?php
+            $sql = "SELECT 
 							a.id_kompetensi,
 							a.nama_kompetensi,
 							a.bobot_kompetensi,
@@ -179,56 +186,69 @@ require_once('../config/koneksi.php');
 						FROM jenis_kompetensi a
 						JOIN isi_kompetensi b ON a.id_kompetensi = b.id_kompetensi
 						GROUP BY a.id_kompetensi";
-			$q = mysqli_query($con, $sql);
+            $q = mysqli_query($con, $sql);
 
-			$data_kompetensi = [];
+            $data_kompetensi = [];
 
-			while ($row = mysqli_fetch_array($q)) {
-				${"b_" . $row['nama_kompetensi']} = $row['bobot_kompetensi'];
-				${"jml_" . $row['nama_kompetensi']} = $row['bobot_kompetensi'];
-				$data_kompetensi[] = $row;
-			}
-			?>
+            while ($row = mysqli_fetch_array($q)) {
+                ${"b_" . $row['nama_kompetensi']} = $row['bobot_kompetensi'];
+                ${"jml_" . $row['nama_kompetensi']} = $row['bobot_kompetensi'];
+                $data_kompetensi[] = $row;
+            }
+            ?>
 
-        <table class="table table-bordered" border="1" cellspacing="0" cellpadding="5">
-            <tr>
-                <th class="txt_center" width="1%" rowspan="2">No</th>
-                <th class="txt_center" width="15%" rowspan="2">NIP</th>
-                <th class="txt_center" width="20%" rowspan="2">Nama</th>
-                <th class="txt_center" width="16%" rowspan="2">Jabatan</th>
-                <th class="txt_center" colspan="4">Kompetensi</th>
-                <th class="txt_center" rowspan="2">Total</th>
-            </tr>
-            <tr>
+            <table class="table table-bordered"
+                   border="1"
+                   cellspacing="0"
+                   cellpadding="5">
+                <tr>
+                    <th class="txt_center"
+                        width="1%"
+                        rowspan="2">No</th>
+                    <th class="txt_center"
+                        width="15%"
+                        rowspan="2">NIP</th>
+                    <th class="txt_center"
+                        width="20%"
+                        rowspan="2">Nama</th>
+                    <th class="txt_center"
+                        width="16%"
+                        rowspan="2">Jabatan</th>
+                    <th class="txt_center"
+                        colspan="4">Kompetensi</th>
+                    <th class="txt_center"
+                        rowspan="2">Total</th>
+                </tr>
+                <tr>
+                    <?php
+                    foreach ($data_kompetensi as $key => $value) {
+                        echo "<th class='txt_center'>$value[nama_kompetensi]</th>";
+                    }
+                    ?>
+                </tr>
                 <?php
-					foreach ($data_kompetensi as $key => $value) {
-						echo "<th class='txt_center'>$value[nama_kompetensi]</th>";
-					}
-					?>
-            </tr>
-            <?php
 
 
 
-				$sql = "SELECT * FROM penilai a JOIN penilai_detail b ON a.id_penilai = b.id_penilai WHERE a.nip = '$nip_user' ";
-				$q = mysqli_query($con, $sql);
-				$id_penilai_detail = '0';
-				$i = 0;
-				while ($row = mysqli_fetch_array($q)) {
-					if ($i == 0) {
-						$id_penilai_detail = $row['id_penilai_detail'];
-					} else {
-						$id_penilai_detail .= ", " . $row['id_penilai_detail'];
-					}
-					$i++;
-				}
-				$id_periode = get_tahun_ajar_id();
-				$komp = '';
-				foreach ($data_kompetensi as $key => $value) {
-					$komp .= "SUM( IF(tbnilai.nama_kompetensi = '$value[nama_kompetensi]', tbnilai.nilai, 0) ) AS '$value[nama_kompetensi]', ";
-				}
+                $sql = "SELECT * FROM penilai a JOIN penilai_detail b ON a.id_penilai = b.id_penilai WHERE a.nip = '$nip_user' ";
+                $q = mysqli_query($con, $sql);
+                $id_penilai_detail = '0';
+                $i = 0;
+                while ($row = mysqli_fetch_array($q)) {
+                    if ($i == 0) {
+                        $id_penilai_detail = $row['id_penilai_detail'];
+                    } else {
+                        $id_penilai_detail .= ", " . $row['id_penilai_detail'];
+                    }
+                    $i++;
+                }
+                $id_periode = get_tahun_ajar_id();
+                $komp = '';
+                foreach ($data_kompetensi as $key => $value) {
+                    $komp .= "SUM( IF(tbnilai.nama_kompetensi = '$value[nama_kompetensi]', tbnilai.nilai, 0) ) AS '$value[nama_kompetensi]', ";
+                }
 
-				$sql = "SELECT 
+                $sql = "SELECT 
 							tbnilai.nip_penilai,
 							tbnilai.penilai,
 							tbnilai.level,
@@ -257,63 +277,52 @@ require_once('../config/koneksi.php');
 						GROUP BY a.id_penilai_detail, c.id_kompetensi
 						ORDER BY 4) as tbnilai
 						GROUP BY tbnilai.penilai";
-				//echo $sql;
-				$q = mysqli_query($con, $sql);
-				$nno = 0;
-				echo "<br>";
-				$tot_arr['atasan'] = 0;
-				$tot_arr['guru'] = 0;
-				$tot_arr['sendiri'] = 0;
-				while ($row = mysqli_fetch_array($q)) {
-					echo "<tr>";
-					echo "<td>" . ++$nno . "</td>";
-					echo "<td>$row[nip_penilai]</td>";
-					echo "<td>$row[penilai]</td>";
-					echo "<td>$row[jabatan]</td>";
+                //echo $sql;
+                $q = mysqli_query($con, $sql);
+                $nno = 0;
+                echo "<br>";
+                $tot_arr['atasan'] = 0;
+                while ($row = mysqli_fetch_array($q)) {
+                    echo "<tr>";
+                    echo "<td>" . ++$nno . "</td>";
+                    echo "<td>$row[nip_penilai]</td>";
+                    echo "<td>$row[penilai]</td>";
+                    echo "<td>$row[jabatan]</td>";
 
-					$tot = 0;
-					foreach ($data_kompetensi as $key => $value) {
-						$nil = ($row[$value['nama_kompetensi']] / $value['jml']) * 100;
-						echo "<td class='txt_right'>" . number_format($nil, 2) . "</td>";
-						$tot += $nil * ($value['bobot_kompetensi'] / 100);
-					}
+                    $tot = 0;
+                    foreach ($data_kompetensi as $key => $value) {
+                        $nil = ($row[$value['nama_kompetensi']] / $value['jml']) * 100;
+                        echo "<td class='txt_right'>" . number_format($nil, 2) . "</td>";
+                        $tot += $nil * ($value['bobot_kompetensi'] / 100);
+                    }
 
-					if ($row['level'] == 2 || $row['level'] == 3) {
-						$tot_arr['atasan'] += $tot;
-					} else if ($row['level'] == 1 && $row['nip_penilai'] != $nip_user) {
-						$tot_arr['guru'] += $tot;
-					} else {
-						$tot_arr['sendiri'] += $tot;
-					}
+                    if ($row['level'] == 2 || $row['level'] == 3) {
+                        $tot_arr['atasan'] += $tot;
+                    }
 
-					echo "<td class='txt_right'>" . number_format($tot, 2) . "</td>";
-					echo "</tr>";
-				}
-				?>
-            <tr>
-                <th colspan="8">Total Nilai Kinerja</th>
-                <th class="txt_right">
-                    <?php
+                    echo "<td class='txt_right'>" . number_format($tot, 2) . "</td>";
+                    echo "</tr>";
+                }
+                ?>
+                <tr>
+                    <th colspan="8">Total Nilai Kinerja</th>
+                    <th class="txt_right">
+                        <?= $tot ?>
+                    </th>
+                </tr>
 
-						$ak = ($tot_arr['atasan'] * 0.5) + ($tot_arr['guru'] * 0.3) + ($tot_arr['sendiri'] * 0.2);
-						echo $ak;
-
-						?>
-                </th>
-            </tr>
-
-        </table>
-        <?php endif; ?>
-    </div>
-    <div class="footer">
-        <?php
-		$array_bulan = array(1 => "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
-		$tgl = date("d") . " " . $array_bulan[date("n")] . " " . date("Y");
-		?>
-        <p>Blitar,
-            <?= $tgl; ?>
-        </p>
-    </div>
-</body>
+            </table>
+            <?php endif; ?>
+        </div>
+        <div class="footer">
+            <?php
+        $array_bulan = array(1 => "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+        $tgl = date("d") . " " . $array_bulan[date("n")] . " " . date("Y");
+        ?>
+            <p>Blitar,
+                <?= $tgl; ?>
+            </p>
+        </div>
+    </body>
 
 </html>

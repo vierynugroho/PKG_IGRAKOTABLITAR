@@ -197,15 +197,6 @@
                     ${"jml_" . $row['nama_kompetensi']} = $row['bobot_kompetensi'];
                     $data_kompetensi[] = $row;
                 }
-                // /*echo '<pre>';
-                // //print_r($data_kompetensi);
-                // //echo $data_kompetensi[1]['nama_kompetensi'];
-
-                // foreach ($data_kompetensi as $key => $value) {
-                // 	echo "$key => $value[nama_kompetensi]";
-                // 	echo "SUM( IF(tbnilai.$value[nama_kompetensi] = '$value[nama_kompetensi]', tbnilai.nilai, 0) ) AS '$value[nama_kompetensi]', <br>";
-                // }
-                // echo '</pre>';*/
                 ?>
 
                 <table class="table table-bordered">
@@ -224,17 +215,10 @@
                                 echo "<th>$value[nama_kompetensi]</th>";
                             }
                             ?>
-                            <!-- <th>Pedagogik</th>
-						<th>Kepribadian</th>
-						<th>Sosial</th>
-						<th>Profesional</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-
-
-
                         $sql = "SELECT * FROM penilai a JOIN penilai_detail b ON a.id_penilai = b.id_penilai WHERE a.nip = '$nip_user' ";
                         $q = mysqli_query($con, $sql);
                         $id_penilai_detail = '0';
@@ -252,12 +236,7 @@
                         foreach ($data_kompetensi as $key => $value) {
                             $komp .= "SUM( IF(tbnilai.nama_kompetensi = '$value[nama_kompetensi]', tbnilai.nilai, 0) ) AS '$value[nama_kompetensi]', ";
                         }
-                        /*
-												   SUM( IF(tbnilai.nama_kompetensi = 'Pedagogik', tbnilai.nilai, 0) ) AS 'Pedagogik',
-												   SUM( IF(tbnilai.nama_kompetensi = 'Kepribadian', tbnilai.nilai, 0) ) AS 'Kepribadian',
-												   SUM( IF(tbnilai.nama_kompetensi = 'Sosial', tbnilai.nilai, 0) ) AS 'Sosial',
-												   SUM( IF(tbnilai.nama_kompetensi = 'Profesional', tbnilai.nilai, 0) ) AS 'Profesional'
-									   */
+
 
                         $sql = "SELECT 
 								tbnilai.nip_penilai,
@@ -288,13 +267,12 @@
 							GROUP BY a.id_penilai_detail, c.id_kompetensi
 							ORDER BY 4) as tbnilai
 							GROUP BY tbnilai.penilai";
-                        //echo $sql;
+
                         $q = mysqli_query($con, $sql);
                         $nno = 0;
                         echo "<br>";
                         $tot_arr['atasan'] = 0;
-                        // $tot_arr['guru'] = 0;
-                        // $tot_arr['sendiri'] = 0;
+
                         while ($row = mysqli_fetch_array($q)) {
                             echo "<tr>";
                             echo "<td>" . ++$nno . "</td>";
