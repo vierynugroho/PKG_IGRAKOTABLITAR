@@ -138,47 +138,55 @@
                                       action="modal/p_user.php">
                                     <div class="form-group row">
                                         <label for="nip"
-                                               class="col-sm-2 col-form-label col-form-label-sm">Nip</label>
+                                               class="col-sm-2 col-form-label col-form-label-sm">NIP<span
+                                                  class="text-danger">*</span></label>
                                         <div class="col-sm-10">
                                             <input type="text"
                                                    class="form-control form-control-sm"
                                                    id="nip"
                                                    name="nip"
                                                    <?= isset($nip) ? 'value="' . $nip . '" readonly' : ""; ?>
-                                                   placeholder="NIP">
+                                                   placeholder="NIP"
+                                                   required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="nama_guru"
-                                               class="col-sm-2 col-form-label col-form-label-sm">Nama</label>
+                                               class="col-sm-2 col-form-label col-form-label-sm">Nama<span
+                                                  class="text-danger">*</span></label>
                                         <div class="col-sm-10">
                                             <input type="text"
                                                    class="form-control form-control-sm"
                                                    id="nama_guru"
                                                    name="nama_guru"
                                                    value="<?= isset($nama_guru) ? $nama_guru : ""; ?>"
-                                                   placeholder="Nama">
+                                                   placeholder="Nama"
+                                                   required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="password"
-                                               class="col-sm-2 col-form-label col-form-label-sm">Password</label>
+                                               class="col-sm-2 col-form-label col-form-label-sm">Password<span
+                                                  class="text-danger">*</span></label>
                                         <div class="col-sm-10">
                                             <input type="text"
                                                    class="form-control form-control-sm"
                                                    id="password"
                                                    name="password"
                                                    value="<?= isset($password) ? $password : ""; ?>"
-                                                   placeholder="Password">
+                                                   placeholder="Password"
+                                                   required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="id_jenis_user"
-                                               class="col-sm-2 col-form-label col-form-label-sm">Jabatan</label>
+                                               class="col-sm-2 col-form-label col-form-label-sm">Jabatan<span
+                                                  class="text-danger">*</span></label>
                                         <div class="col-sm-10">
                                             <select class="form-select form-select-sm"
                                                     id="id_jenis_user"
-                                                    name="id_jenis_user">
+                                                    name="id_jenis_user"
+                                                    required>
                                                 <?php
                                                 $jb = mysqli_query($con, "SELECT * FROM jenis_user");
                                                 while ($rj = mysqli_fetch_array($jb)) {

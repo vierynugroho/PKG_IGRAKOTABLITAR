@@ -204,20 +204,23 @@
                                        value="<?= isset($id_jenis_user) ? $id_jenis_user : ""; ?>">
                                 <div class="form-group row">
                                     <label for="jabatan"
-                                           class="col-sm-2 control-label">Jabatan</label>
+                                           class="col-sm-2 control-label">Jabatan<span
+                                              class="text-danger">*</span></label>
                                     <div class="col-sm-10">
                                         <input type="text"
                                                class="form-control"
                                                id="jabatan"
                                                name="jabatan"
                                                value="<?= isset($jabatan) ? $jabatan : ""; ?>"
-                                               placeholder="Jabatan">
+                                               placeholder="Jabatan"
+                                               required>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="level"
-                                           class="col-sm-2 control-label">Level</label>
+                                           class="col-sm-2 control-label">Level<span
+                                              class="text-danger">*</span></label>
                                     <div class="col-sm-10">
                                         <input type="number"
                                                class="form-control"
@@ -226,7 +229,8 @@
                                                max="3"
                                                name="level"
                                                value="<?= isset($level) ? $level : ""; ?>"
-                                               placeholder="Level">
+                                               placeholder="Level"
+                                               required>
                                     </div>
                                 </div>
                         </div>

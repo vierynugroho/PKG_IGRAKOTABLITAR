@@ -128,27 +128,30 @@
                                 <div class="form-group row">
                                     <label for="nama_kompetensi"
                                            class="col-sm-4 col-form-label col-form-label-sm">Jenis
-                                        Kompetensi</label>
+                                        Kompetensi<span class="text-danger">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="text"
                                                class="form-control"
                                                id="nama_kompetensi"
                                                name="nama_kompetensi"
                                                value="<?= isset($nama_kompetensi) ? $nama_kompetensi : ""; ?>"
-                                               placeholder="Nama Kompetensi">
+                                               placeholder="Nama Kompetensi"
+                                               required>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="bobot_kompetensi"
-                                           class="col-sm-4 col-form-label col-form-label-sm">Bobot Kompetensi</label>
+                                           class="col-sm-4 col-form-label col-form-label-sm">Bobot Kompetensi<span
+                                              class="text-danger">*</span></label>
                                     <div class="col-sm-8">
                                         <input type="number"
                                                class="form-control"
                                                id="bobot_kompetensi"
                                                name="bobot_kompetensi"
                                                value="<?= isset($bobot_kompetensi) ? $bobot_kompetensi : ""; ?>"
-                                               placeholder="Bobot Kompetensi">
+                                               placeholder="Bobot Kompetensi"
+                                               required>
                                     </div>
                                     <div class="text-muted small">
                                         * Pastikan Bobot Total Maksimal Adalah 100%
