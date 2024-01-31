@@ -1,51 +1,52 @@
 <script>
-    (function(document) {
-        'use strict';
+(function(document) {
+    'use strict';
 
-        var LightTableFilter = (function(Arr) {
+    var LightTableFilter = (function(Arr) {
 
-            var _input;
+        var _input;
 
-            function _onInputEvent(e) {
-                _input = e.target;
-                var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-                Arr.forEach.call(tables, function(table) {
-                    Arr.forEach.call(table.tBodies, function(tbody) {
-                        Arr.forEach.call(tbody.rows, _filter);
-                    });
+        function _onInputEvent(e) {
+            _input = e.target;
+            var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+            Arr.forEach.call(tables, function(table) {
+                Arr.forEach.call(table.tBodies, function(tbody) {
+                    Arr.forEach.call(tbody.rows, _filter);
+                });
+            });
+        }
+
+        function _filter(row) {
+            var text = row.textContent.toLowerCase(),
+                val = _input.value.toLowerCase();
+            row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+        }
+
+        return {
+            init: function() {
+                var inputs = document.getElementsByClassName('form-control');
+                Arr.forEach.call(inputs, function(input) {
+                    input.oninput = _onInputEvent;
                 });
             }
+        };
+    })(Array.prototype);
 
-            function _filter(row) {
-                var text = row.textContent.toLowerCase(),
-                    val = _input.value.toLowerCase();
-                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-            }
+    document.addEventListener('readystatechange', function() {
+        if (document.readyState === 'complete') {
+            LightTableFilter.init();
+        }
+    });
 
-            return {
-                init: function() {
-                    var inputs = document.getElementsByClassName('form-control');
-                    Arr.forEach.call(inputs, function(input) {
-                        input.oninput = _onInputEvent;
-                    });
-                }
-            };
-        })(Array.prototype);
-
-        document.addEventListener('readystatechange', function() {
-            if (document.readyState === 'complete') {
-                LightTableFilter.init();
-            }
-        });
-
-    })(document);
+})(document);
 </script>
 
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.php?p=home"><i class="fas fa fa-home text-success"></i></a></li>
-            <li class="breadcrumb-item active" aria-current="page">Users</li>
+            <li class="breadcrumb-item active"
+                aria-current="page">Users</li>
         </ol>
     </nav>
     <div class="shadow mb-4 p-3">
@@ -54,7 +55,10 @@
                 <!-- Button trigger modal -->
                 <div class="row">
                     <div class="col">
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button"
+                                class="btn btn-success"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
                             <span><i class="fas fa-user-plus"></i> Tambah User</span>
                         </button>
                     </div>
@@ -89,88 +93,140 @@
                     }
 
                 ?>
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                            $('#exampleModal').modal('show');
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#exampleModal').modal('show');
 
-                            $('#exampleModal').on('hidden.bs.modal', function(e) {
-                                document.location = 'index.php?p=muser';
-                            });
-                        });
-                    </script>
+                    $('#exampleModal').on('hidden.bs.modal', function(e) {
+                        document.location = 'index.php?p=muser';
+                    });
+                });
+                </script>
                 <?php
                 }
                 ?>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
+                <div class="modal fade"
+                     id="exampleModal"
+                     tabindex="-1"
+                     role="dialog"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg"
+                         role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">
+                                <h5 class="modal-title"
+                                    id="exampleModalLabel">
                                     <?php if (isset($_GET['ubah'])) {
                                         echo "Ubah User | {$nama_guru}";
                                     } else {
                                         echo "Tambah User";
                                     } ?>
                                 </h5>
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <button type="button"
+                                        class="close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <!-- form -->
-                                <form class="form-horizontal" method="post" action="modal/p_user.php">
+                                <form class="form-horizontal"
+                                      method="post"
+                                      action="modal/p_user.php">
                                     <div class="form-group row">
-                                        <label for="nip" class="col-sm-2 col-form-label col-form-label-sm">NIP<span class="text-danger">*</span></label>
+                                        <label for="nip"
+                                               class="col-sm-2 col-form-label col-form-label-sm">NIP<span
+                                                  class="text-danger">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control form-control-sm" id="nip" name="nip" value="<?= isset($nip) ? $nip : ''; ?>" placeholder="NIP" required>
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   id="nip"
+                                                   name="nip"
+                                                   <?= isset($nip) ? 'value="' . $nip . '" readonly' : ""; ?>
+                                                   placeholder="NIP"
+                                                   required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="nama_guru" class="col-sm-2 col-form-label col-form-label-sm">Nama<span class="text-danger">*</span></label>
+                                        <label for="nama_guru"
+                                               class="col-sm-2 col-form-label col-form-label-sm">Nama<span
+                                                  class="text-danger">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control form-control-sm" id="nama_guru" name="nama_guru" value="<?= isset($nama_guru) ? $nama_guru : ''; ?>" placeholder="Nama" required>
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   id="nama_guru"
+                                                   name="nama_guru"
+                                                   value="<?= isset($nama_guru) ? $nama_guru : ""; ?>"
+                                                   placeholder="Nama"
+                                                   required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="password" class="col-sm-2 col-form-label col-form-label-sm">Password<span class="text-danger">*</span></label>
+                                        <label for="password"
+                                               class="col-sm-2 col-form-label col-form-label-sm">Password<span
+                                                  class="text-danger">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control form-control-sm" id="password" name="password" value="<?= isset($password) ? $password : ""; ?>" placeholder="Password" required>
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   id="password"
+                                                   name="password"
+                                                   value="<?= isset($password) ? $password : ""; ?>"
+                                                   placeholder="Password"
+                                                   required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="id_jenis_user" class="col-sm-2 col-form-label col-form-label-sm">Jabatan<span class="text-danger">*</span></label>
+                                        <label for="id_jenis_user"
+                                               class="col-sm-2 col-form-label col-form-label-sm">Jabatan<span
+                                                  class="text-danger">*</span></label>
                                         <div class="col-sm-10">
-                                            <select class="form-select form-select-sm" id="id_jenis_user" name="id_jenis_user" required>
+                                            <select class="form-select form-select-sm"
+                                                    id="id_jenis_user"
+                                                    name="id_jenis_user"
+                                                    required>
                                                 <?php
                                                 $jb = mysqli_query($con, "SELECT * FROM jenis_user");
                                                 while ($rj = mysqli_fetch_array($jb)) {
                                                 ?>
 
 
-                                                    <?php if (!$_GET['ubah']) {
+                                                <?php if (!$_GET['ubah']) {
                                                     ?>
-                                                        <option value="6" selected hidden>-- Jabatan --</option>
-                                                    <?php } else { ?>
-                                                        <option value="<?= $id_jenis_user ?>" selected hidden> <?= $jabatan ?></option>
-                                                    <?php } ?>
+                                                <option value="6"
+                                                        selected
+                                                        hidden>-- Jabatan --</option>
+                                                <?php } else { ?>
+                                                <option value="<?= $id_jenis_user ?>"
+                                                        selected
+                                                        hidden> <?= $jabatan ?></option>
+                                                <?php } ?>
 
-                                                    <option value="<?= $rj['id_jenis_user'] ?>">
-                                                        <?= $rj['jabatan']; ?>
-                                                    </option>
+                                                <option value="<?= $rj['id_jenis_user'] ?>">
+                                                    <?= $rj['jabatan']; ?>
+                                                </option>
                                                 <?php } ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="status_guru" class="col-sm-2 col-form-label col-form-label-sm">Status Guru</label>
+                                        <label for="status_guru"
+                                               class="col-sm-2 col-form-label col-form-label-sm">Status Guru</label>
                                         <div class="col-sm-10">
-                                            <select name="status_guru" id="status_guru" class="form-select form-select-sm">
+                                            <select name="status_guru"
+                                                    id="status_guru"
+                                                    class="form-select form-select-sm">
                                                 <?php if (!$_GET['ubah']) {
                                                 ?>
-                                                    <option value="" selected hidden> -- Status Guru -- </option>
+                                                <option value=""
+                                                        selected
+                                                        hidden> -- Status Guru -- </option>
                                                 <?php } else { ?>
-                                                    <option value="" selected hidden> <?= $status_guru ?></option>
+                                                <option value=""
+                                                        selected
+                                                        hidden> <?= $status_guru ?></option>
                                                 <?php } ?>
 
                                                 <option value="PNS">PNS (Pegawai Negeri Sipil)</option>
@@ -183,25 +239,42 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="alamat" class="col-sm-2 control-form-label col-form-label-sm">Alamat</label>
+                                        <label for="alamat"
+                                               class="col-sm-2 control-form-label col-form-label-sm">Alamat</label>
                                         <div class="col-sm-10">
-                                            <textarea class="form-control form-control-sm" id="alamat" name="alamat" placeholder="Alamat" rows="10"><?= isset($alamat) ? $alamat : ""; ?></textarea>
+                                            <textarea class="form-control form-control-sm"
+                                                      id="alamat"
+                                                      name="alamat"
+                                                      placeholder="Alamat"
+                                                      rows="10"><?= isset($alamat) ? $alamat : ""; ?></textarea>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="tempat_lahir" class="col-sm-2 control-form-label col-form-label-sm">Tempat
+                                        <label for="tempat_lahir"
+                                               class="col-sm-2 control-form-label col-form-label-sm">Tempat
                                             Lahir</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control form-control-sm" id="tempat_lahir" name="tempat_lahir" value="<?= isset($tempat_lahir) ? $tempat_lahir : ""; ?>" placeholder="Tempat Lahir">
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   id="tempat_lahir"
+                                                   name="tempat_lahir"
+                                                   value="<?= isset($tempat_lahir) ? $tempat_lahir : ""; ?>"
+                                                   placeholder="Tempat Lahir">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="tgl_lahir" class="col-sm-2 control-form-label col-form-label-sm">Tgl
+                                        <label for="tgl_lahir"
+                                               class="col-sm-2 control-form-label col-form-label-sm">Tgl
                                             Lahir</label>
                                         <div class="col-sm-10">
-                                            <input type="date" class="form-control form-control-sm" id="tgl_lahir" name="tgl_lahir" value="<?= isset($tgl_lahir) ? $tgl_lahir : ""; ?>" placeholder="Tgl Lahir">
+                                            <input type="date"
+                                                   class="form-control form-control-sm"
+                                                   id="tgl_lahir"
+                                                   name="tgl_lahir"
+                                                   value="<?= isset($tgl_lahir) ? $tgl_lahir : ""; ?>"
+                                                   placeholder="Tgl Lahir">
                                         </div>
                                     </div>
 
@@ -210,14 +283,26 @@
                                             Kelamin</label>
                                         <div class="col-sm-10">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin_l" value="L" <?= isset($L) ? "checked" : ""; ?>>
-                                                <label class="form-check-label" for="jenis_kelamin_l">
+                                                <input class="form-check-input"
+                                                       type="radio"
+                                                       name="jenis_kelamin"
+                                                       id="jenis_kelamin_l"
+                                                       value="L"
+                                                       <?= isset($L) ? "checked" : ""; ?>>
+                                                <label class="form-check-label"
+                                                       for="jenis_kelamin_l">
                                                     Laki-Laki
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin_p" value="P" <?= isset($P) ? "checked" : ""; ?>>
-                                                <label class="form-check-label" for="jenis_kelamin_p">
+                                                <input class="form-check-input"
+                                                       type="radio"
+                                                       name="jenis_kelamin"
+                                                       id="jenis_kelamin_p"
+                                                       value="P"
+                                                       <?= isset($P) ? "checked" : ""; ?>>
+                                                <label class="form-check-label"
+                                                       for="jenis_kelamin_p">
                                                     Perempuan
                                                 </label>
                                             </div>
@@ -229,14 +314,26 @@
                                             Nikah</label>
                                         <div class="col-sm-10">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="status_nikah" id="status_nikah_b" value="B" <?= isset($B) ? "checked" : ""; ?>>
-                                                <label class="form-check-label" for="status_nikah_b">
+                                                <input class="form-check-input"
+                                                       type="radio"
+                                                       name="status_nikah"
+                                                       id="status_nikah_b"
+                                                       value="B"
+                                                       <?= isset($B) ? "checked" : ""; ?>>
+                                                <label class="form-check-label"
+                                                       for="status_nikah_b">
                                                     Belum Menikah
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="status_nikah" id="status_nikah_n" value="N" <?= isset($N) ? "checked" : ""; ?>>
-                                                <label class="form-check-label" for="status_nikah_n">
+                                                <input class="form-check-input"
+                                                       type="radio"
+                                                       name="status_nikah"
+                                                       id="status_nikah_n"
+                                                       value="N"
+                                                       <?= isset($N) ? "checked" : ""; ?>>
+                                                <label class="form-check-label"
+                                                       for="status_nikah_n">
                                                     Sudah Menikah
                                                 </label>
                                             </div>
@@ -244,16 +341,27 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="no_telp" class="col-sm-2 control-form-label col-form-label-sm">No
+                                        <label for="no_telp"
+                                               class="col-sm-2 control-form-label col-form-label-sm">No
                                             Telp</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control form-control-sm" id="no_telp" name="no_telp" value="<?= isset($no_telp) ? $no_telp : ""; ?>" placeholder="No Telp">
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   id="no_telp"
+                                                   name="no_telp"
+                                                   value="<?= isset($no_telp) ? $no_telp : ""; ?>"
+                                                   placeholder="No Telp">
                                         </div>
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <input type="submit" class="btn btn-success" value="<?= $btn; ?>" name="btnSimpan">
+                                <button type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Batal</button>
+                                <input type="submit"
+                                       class="btn btn-success"
+                                       value="<?= $btn; ?>"
+                                       name="btnSimpan">
                                 </form>
                             </div>
                         </div>
@@ -264,13 +372,18 @@
                 <div class="col">
                     <hr>
                     <div class="table-responsive">
-                        <table class="table text-center table-hover order-table display w-100" id="myTable">
+                        <table class="table text-center table-hover order-table display w-100"
+                               id="myTable">
                             <thead class="table-success">
                                 <tr>
-                                    <th scope="col" class="text-center align-middle">NIP</th>
-                                    <th scope="col" class="text-center align-middle">Nama</th>
-                                    <th scope="col" class="text-center align-middle">Jabatan</th>
-                                    <th scope="col" class="text-center align-middle">Aksi</th>
+                                    <th scope="col"
+                                        class="text-center align-middle">NIP</th>
+                                    <th scope="col"
+                                        class="text-center align-middle">Nama</th>
+                                    <th scope="col"
+                                        class="text-center align-middle">Jabatan</th>
+                                    <th scope="col"
+                                        class="text-center align-middle">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -280,18 +393,23 @@
                                 $i = 0;
                                 while ($row = mysqli_fetch_array($q)) {
                                 ?>
-                                    <tr>
-                                        <td><?= $row['nip']; ?></td>
-                                        <td><?= $row['nama_guru']; ?></td>
-                                        <td><?= $row['jabatan']; ?></td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm btn_info_user m-1" id="<?= $row['nip']; ?>"><span><i class="fas fa-search"></i>
-                                                    Detail</span></button>
-                                            <a href="index.php?p=muser&ubah=true&nip=<?= $row['nip']; ?>" class="btn btn-warning btn-sm m-1" id="<?= $row['nip']; ?>"><span><i class="fas fa-edit"></i> Ubah</span></a>
-                                            <button href="#" class="btn btn-danger btn-sm btn_hapus_user m-1" id="<?= $row['nip']; ?>"><span><i class="fas fa-trash"></i>
-                                                    Hapus</span></button>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td><?= $row['nip']; ?></td>
+                                    <td><?= $row['nama_guru']; ?></td>
+                                    <td><?= $row['jabatan']; ?></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm btn_info_user m-1"
+                                                id="<?= $row['nip']; ?>"><span><i class="fas fa-search"></i>
+                                                Detail</span></button>
+                                        <a href="index.php?p=muser&ubah=true&nip=<?= $row['nip']; ?>"
+                                           class="btn btn-warning btn-sm m-1"
+                                           id="<?= $row['nip']; ?>"><span><i class="fas fa-edit"></i> Ubah</span></a>
+                                        <button href="#"
+                                                class="btn btn-danger btn-sm btn_hapus_user m-1"
+                                                id="<?= $row['nip']; ?>"><span><i class="fas fa-trash"></i>
+                                                Hapus</span></button>
+                                    </td>
+                                </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
@@ -304,12 +422,20 @@
 </div>
 
 
-<div class="modal fade infolengkap" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade infolengkap"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="mySmallModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detail User</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title"
+                    id="exampleModalLabel">Detail User</h5>
+                <button type="button"
+                        class="close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -380,17 +506,28 @@
     </div>
 </div>
 
-<div class="modal fade hapusdata" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade hapusdata"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="mySmallModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-xs">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Hapus Data User</h5>
+                <h5 class="modal-title"
+                    id="exampleModalLabel">Hapus Data User</h5>
 
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button"
+                        class="close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                    <form method="post" action="modal/p_user.php">
+                    <form method="post"
+                          action="modal/p_user.php">
 
-                        <input type="hidden" name="id_delete" id="id_delete">
+                        <input type="hidden"
+                               name="id_delete"
+                               id="id_delete">
                 </button>
             </div>
             <div class="modal-body">
@@ -398,9 +535,14 @@
                 <div class="modal-text">Data User Akan Dihapus?</div>
                 <br>
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-danger btn_delete" name="btnDelete" value="Hapus">
+                    <input type="submit"
+                           class="btn btn-danger btn_delete"
+                           name="btnDelete"
+                           value="Hapus">
                     </form>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">Batal</button>
                 </div>
             </div>
         </div>
@@ -408,35 +550,35 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $(".btn_info_user").click(function() {
-            var id = $(this).attr("id");
-            var _url = "modal/p_user.php?nip=" + id;
-            $.ajax({
-                url: _url,
-                success: function(result) {
-                    var res = JSON.parse(result);
-                    console.log(res);
-                    $("#td_nip").html(res.nip);
-                    $("#td_jabatan").html(res.jabatan);
-                    $("#td_password").html(res.password);
-                    $("#td_nama_guru").html(res.nama_guru);
-                    $("#td_status_guru").html(res.status_guru);
-                    $("#td_alamat").html(res.alamat);
-                    $("#td_ttl").html((res.tempat_lahir != null ? res.tempat_lahir : '') + (res
-                        .tgl_lahir !== null ? ', ' + res.tgl_lahir : ''));
-                    $("#td_jk").html(res.jenis_kelamin == "L" ? "Laki-laki" : "Perempuan");
-                    $("#td_status_nikah").html(res.status_nikah == "B" ? "Belum Nikah" :
-                        "Sudah Nikah");
-                    $("#td_notelp").html(res.no_telp);
-                }
-            });
-            $('.infolengkap').modal('show');
+$(document).ready(function() {
+    $(".btn_info_user").click(function() {
+        var id = $(this).attr("id");
+        var _url = "modal/p_user.php?nip=" + id;
+        $.ajax({
+            url: _url,
+            success: function(result) {
+                var res = JSON.parse(result);
+                console.log(res);
+                $("#td_nip").html(res.nip);
+                $("#td_jabatan").html(res.jabatan);
+                $("#td_password").html(res.password);
+                $("#td_nama_guru").html(res.nama_guru);
+                $("#td_status_guru").html(res.status_guru);
+                $("#td_alamat").html(res.alamat);
+                $("#td_ttl").html((res.tempat_lahir != null ? res.tempat_lahir : '') + (res
+                    .tgl_lahir !== null ? ', ' + res.tgl_lahir : ''));
+                $("#td_jk").html(res.jenis_kelamin == "L" ? "Laki-laki" : "Perempuan");
+                $("#td_status_nikah").html(res.status_nikah == "B" ? "Belum Nikah" :
+                    "Sudah Nikah");
+                $("#td_notelp").html(res.no_telp);
+            }
         });
-        $(".btn_hapus_user").click(function() {
-            var id = $(this).attr("id");
-            $("#id_delete").val(id);
-            $('.hapusdata').modal('show');
-        });
+        $('.infolengkap').modal('show');
     });
+    $(".btn_hapus_user").click(function() {
+        var id = $(this).attr("id");
+        $("#id_delete").val(id);
+        $('.hapusdata').modal('show');
+    });
+});
 </script>
