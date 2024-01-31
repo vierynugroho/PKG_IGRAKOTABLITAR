@@ -307,7 +307,7 @@ require_once('../config/koneksi.php');
                 <tr>
                     <th colspan="8">Total Nilai Kinerja</th>
                     <th class="txt_right">
-                        <?= $tot ?>
+                        <?= number_format($tot, 2) ?>
                     </th>
                 </tr>
 
