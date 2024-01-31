@@ -41,24 +41,7 @@
     })(document);
 </script>
 
-<?php
-if (isset($_GET['setaktif'])) {
-    $id_periode = isset($_GET['id_periode']) ? mysqli_real_escape_string($con, htmlspecialchars($_GET['id_periode'])) : "";
-    $sql = "UPDATE periode SET status_periode = 0";
-    $up = mysqli_query($con, $sql);
-    if ($up) {
-        if (mysqli_query($con, "UPDATE periode SET status_periode = 1 WHERE id_periode = $id_periode")) {
-            $_SESSION["flash"]["type"] = "success";
-            $_SESSION["flash"]["head"] = "Sukses";
-            $_SESSION["flash"]["msg"] = "Data berhasil disimpan!";
-        }
-    }
-    $_SESSION["flash"]["type"] = "danger";
-    $_SESSION["flash"]["head"] = "Terjadi Kesalahan";
-    $_SESSION["flash"]["msg"] = "Data gagal disimpan! " . mysqli_error($con);
-    echo "<script>document.location='index.php?p=mperiode';</script>";
-}
-?>
+
 
 <div class="container">
     <nav aria-label="breadcrumb">
@@ -131,15 +114,15 @@ if (isset($_GET['setaktif'])) {
                                 <input type="hidden" name="id_periode" <?= isset($id_periode) ? 'value="' . $id_periode . '"' : ""; ?>>
                                 <div class="form-group row">
                                     <label for="tahun_ajar" class="col-sm-3 col-form-label col-form-label-sm">Tahun
-                                        Ajaran</label>
+                                        Ajaran<span class="text-danger">*</span></label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" id="tahun_ajar" name="tahun_ajar" value="<?= isset($tahun_ajar) ? $tahun_ajar : ""; ?>" placeholder="Tahun Ajaran">
+                                        <input type="number" class="form-control form-control-sm" id="tahun_ajar" name="tahun_ajar" value="<?= isset($tahun_ajar) ? $tahun_ajar : ""; ?>" placeholder="Tahun Ajaran" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="semester" class="col-sm-3 col-form-label col-form-label-sm">Semester</label>
+                                    <label for="semester" class="col-sm-3 col-form-label col-form-label-sm">Semester<span class="text-danger">*</span></label>
                                     <div class="col-sm-9">
-                                        <select name="semester" id="semester" class="form-select form-select-sm">
+                                        <select name="semester" id="semester" class="form-select form-select-sm" required>
                                             <?php
                                             $sql = "SELECT * FROM periode WHERE id_periode = $id_periode";
                                             $q = mysqli_query($con, $sql);
@@ -155,6 +138,28 @@ if (isset($_GET['setaktif'])) {
                                             <?php } ?>
                                             <option value="Ganjil">Ganjil</option>
                                             <option value="Genap">Genap</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="status_periode" class="col-sm-3 col-form-label col-form-label-sm">Status Periode<span class="text-danger">*</span></label>
+                                    <div class="col-sm-9">
+                                        <select name="status_periode" id="status_periode" class="form-select form-select-sm" required>
+                                            <?php
+                                            $sql = "SELECT * FROM periode WHERE status_periode = $id_periode";
+                                            $q = mysqli_query($con, $sql);
+                                            $row = mysqli_fetch_assoc($q);
+
+                                            $status = $row['status_periode'];
+
+                                            if ($_GET['ubah']) { ?>
+                                                <option value="<?= $status ?>" selected hidden> <?= $status == 1 ? 'Aktif' : 'Tidak Aktif'  ?> </option>
+                                            <?php } else { ?>
+                                                <option value="" selected hidden> -- status -- </option>
+                                            <?php } ?>
+                                            <option value="1">Aktif</option>
+                                            <option value="0">Non Aktif</option>
                                         </select>
                                     </div>
                                 </div>
