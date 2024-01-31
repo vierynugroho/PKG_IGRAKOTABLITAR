@@ -59,5 +59,3 @@ if (isset($_GET['nip'])) {
 	}
 	echo json_encode($data);
 }
-
-?>
